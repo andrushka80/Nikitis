@@ -189,7 +189,6 @@ static int Oled_set (void * _self, va_list *app)
 		}
 	}	
 			
-	
 	return 0;
 }
 

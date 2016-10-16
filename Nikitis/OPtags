@@ -73,7 +73,6 @@ GROVEINTERFACES_PRO_H	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib
 GROVELIB_H	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\grovelib.h	49;"	kind:d	line:49
 GROVELIB_PRO_H	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\grovelib-pro.h	50;"	kind:d	line:50
 GROVE_TIMEOUT	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\basicdevices-pro.h	72;"	kind:d	line:72
-GSMGetOperatorName	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^	_dbgwrite(GSMGetOperatorName());$/;"	kind:p	line:31	file:
 GroveDevicesPowerSupply	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\groveboard-pro.h	/^void GroveDevicesPowerSupply(BOOL enable);$/;"	kind:p	line:61
 GroveDevicesPowerSupply	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\groveboard-pro.c	/^void GroveDevicesPowerSupply(BOOL enable)$/;"	kind:f	line:84
 GroveNest	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\groveboard-pro.h	73;"	kind:d	line:73
@@ -115,7 +114,7 @@ MODE_REG	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\3axi
 NOT_SHARED	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\groveinterfaces-pro.h	69;"	kind:d	line:69
 NOT_USED	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\groveinterfaces-pro.h	64;"	kind:d	line:64
 OLED_ADDR0	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\oled.h	5;"	kind:d	line:5
-Oled	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^const void *Oled = &_Oled;$/;"	kind:v	line:207
+Oled	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^const void *Oled = &_Oled;$/;"	kind:v	line:206
 Oled	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^struct Oled$/;"	kind:s	line:60	file:
 Oled_attach	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^static void *Oled_attach (void * _board,void *_sensor,int ic2bus)$/;"	kind:f	line:133	file:
 Oled_config	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^static int Oled_config (void * _self, va_list *app)$/;"	kind:f	line:142	file:
@@ -174,7 +173,7 @@ _IC3Interrupt	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\input_c
 _IC4Interrupt	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\input_capture.c	/^void __attribute__((interrupt, no_auto_psv)) _IC4Interrupt(void)$/;"	kind:f	line:183
 _IC5Interrupt	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\input_capture.c	/^void __attribute__((interrupt, no_auto_psv)) _IC5Interrupt(void)$/;"	kind:f	line:191
 _IC6Interrupt	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\input_capture.c	/^void __attribute__((interrupt, no_auto_psv)) _IC6Interrupt(void)$/;"	kind:f	line:203
-_Oled	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^static const struct SensorClass _Oled =$/;"	kind:v	line:196	typeref:struct:SensorClass	file:
+_Oled	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^static const struct SensorClass _Oled =$/;"	kind:v	line:195	typeref:struct:SensorClass	file:
 __OLED_C	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	49;"	kind:d	line:49	file:
 add	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\3axiscompass.c	/^	int add = sensor->devaddress;$/;"	kind:l	line:174
 add	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^	int add = sensor->devaddress;$/;"	kind:l	line:136
@@ -197,13 +196,12 @@ attachSensorToUartBus	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib
 attachToBoard	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\grovelib-pro.h	/^int attachToBoard(void *,void *,int);$/;"	kind:p	line:62
 attachToBoard	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\grovelib-pro.c	/^int attachToBoard(void *board,void *sensor,int numb)$/;"	kind:f	line:95
 bkground_colour	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^	BYTE bkground_colour =  va_arg(*app, const BYTE);	$/;"	kind:l	line:154
-board	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^	void *board = new(IoT_Board);$/;"	kind:l	line:10
+board	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^	void *board = new(Board);$/;"	kind:l	line:13
 boardType	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\groveboard-pro.c	/^	int boardType;$/;"	kind:m	line:95	struct:Board	file:	access:public
 buf	C:\Users\Andrei\Documents\Flyport\Nikitis\GSM_Events.c	/^	char buf[20];$/;"	kind:l	line:11
 buf	C:\Users\Andrei\Documents\Flyport\Nikitis\GSM_Events.c	/^	char buf[20];$/;"	kind:l	line:23
 buf	C:\Users\Andrei\Documents\Flyport\Nikitis\GSM_Events.c	/^	char buf[20];$/;"	kind:l	line:35
 buf	C:\Users\Andrei\Documents\Flyport\Nikitis\GSM_Events.c	/^	char buf[30];$/;"	kind:l	line:61
-button	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^	void *button = new(Dig_io, INDown);$/;"	kind:l	line:36
 class	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\3axiscompass.c	/^	const void *class;$/;"	kind:m	line:72	struct:Compass	file:	access:public
 class	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\analog_in-pro.c	/^	const void *class;$/;"	kind:m	line:56	struct:An_i	file:	access:public
 class	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\digital_io-pro.c	/^	const void *class;$/;"	kind:m	line:56	struct:Dig_io	file:	access:public
@@ -211,6 +209,7 @@ class	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\groveboard-pro.
 class	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\grovelib-pro.c	/^	const struct BoardClass *class = _class;$/;"	kind:l	line:158
 class	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\grovelib-pro.c	/^	const struct SensorClass *class = _class;$/;"	kind:l	line:180
 class	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^	const void *class;$/;"	kind:m	line:62	struct:Oled	file:	access:public
+compass	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^	void *compass = new(Compass, HMC5883_ADDR,SCALE1,46320);$/;"	kind:l	line:16
 config	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\grovelib-pro.h	/^	int (*config) (void *,va_list *);$/;"	kind:m	line:74	struct:SensorClass	access:public
 configure	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\grovelib-pro.h	/^int configure(void *,...);$/;"	kind:p	line:63
 configure	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\grovelib-pro.c	/^int configure(void *self, ...)$/;"	kind:f	line:110
@@ -222,7 +221,7 @@ ctor	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\grovelib
 d	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\input_capture.c	/^	unsigned long d = 0;$/;"	kind:l	line:402
 data	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\3axiscompass.c	/^	int data;$/;"	kind:l	line:213
 data	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\digital_io-pro.c	/^			float data = va_arg(*app, const float);$/;"	kind:l	line:134
-data	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\i2c_devices-pro.c	/^	BYTE data = I2C2Read(1);$/;"	kind:l	line:75
+data	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\i2c_devices-pro.c	/^	BYTE data = I2C2Read(1);$/;"	kind:l	line:86
 data	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\input_capture.c	/^	unsigned int data;$/;"	kind:l	line:269
 datax	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\3axiscompass.c	/^				float datax = (float)data\/scaling_factor;$/;"	kind:l	line:225
 datay	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\3axiscompass.c	/^				float datay = (float)data\/scaling_factor;$/;"	kind:l	line:231
@@ -256,6 +255,7 @@ get	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\grovelib-
 get	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\grovelib-pro.c	/^float get(void *self, ...)$/;"	kind:f	line:131
 get_	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\grovelib-pro.h	/^	float (*get_)(void *,va_list *);$/;"	kind:m	line:76	struct:SensorClass	access:public
 heading	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\3axiscompass.c	/^				float heading = atan2(datay,datax) + self->declination;$/;"	kind:l	line:232
+heading	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^	unsigned float heading;$/;"	kind:l	line:27
 i	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^		int i = 0;$/;"	kind:l	line:176
 i	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^		int i;$/;"	kind:l	line:163
 i	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^	int k,i;$/;"	kind:l	line:82
@@ -271,6 +271,7 @@ inter	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^	struc
 isShared	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\groveinterfaces-pro.h	/^	BYTE isShared;		\/\/	Pin sharing - Indicates if the pins of the ports are shared with other ports, like in Arduino UNO Grove shield$/;"	kind:m	line:91	struct:__anon1	access:public
 k	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^	int k,i;$/;"	kind:l	line:82
 logo_BW	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\logo.h	/^const unsigned char logo_BW [] = {$/;"	kind:v	line:6
+msg	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^	char msg[45];$/;"	kind:l	line:25
 myFont	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\oled.h	/^unsigned char myFont[][8]={$/;"	kind:v	line:24
 new	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\grovelib-pro.c	/^void *new(const void *_class, ...)$/;"	kind:f	line:61
 new_board	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\grovelib-pro.c	/^static void *new_board(const void *,va_list ap);$/;"	kind:p	line:56	file:
@@ -294,7 +295,7 @@ pwm_num	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\digital_io-pr
 readError	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\grovelib-pro.h	/^unsigned char readError(void);$/;"	kind:p	line:66
 readError	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\grovelib-pro.c	/^unsigned char readError(void)$/;"	kind:f	line:149
 read_register	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\3axiscompass.c	/^BYTE read_register(BYTE,BYTE);$/;"	kind:p	line:64	file:
-read_register	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\i2c_devices-pro.c	/^BYTE read_register(BYTE address,BYTE regist)$/;"	kind:f	line:68
+read_register	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\i2c_devices-pro.c	/^BYTE read_register(BYTE address,BYTE regist)$/;"	kind:f	line:79
 read_register	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^BYTE read_register(BYTE,BYTE);$/;"	kind:p	line:58	file:
 regist	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\3axiscompass.c	/^	BYTE regist = va_arg(*app, const BYTE);$/;"	kind:l	line:211
 registh	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\3axiscompass.c	/^	BYTE registh;$/;"	kind:l	line:212
@@ -347,6 +348,7 @@ timeout	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\input_capture
 timer_32bit	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\input_capture.c	/^	unsigned long timer_32bit;$/;"	kind:l	line:153
 timer_32bit	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\input_capture.c	/^	unsigned long timer_32bit;$/;"	kind:l	line:173
 timer_32bit	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\input_capture.c	/^	unsigned long timer_32bit;$/;"	kind:l	line:193
+totalf	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^	float x_axis,y_axis,z_axis,totalf;$/;"	kind:l	line:26
 type	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\digital_io-pro.c	/^	BYTE type;$/;"	kind:m	line:58	struct:Dig_io	file:	access:public
 type	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^	BYTE type =  va_arg(*app, const BYTE);	$/;"	kind:l	line:153
 uSD_CD	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\groveboard-pro.h	70;"	kind:d	line:70
@@ -357,4 +359,7 @@ uSD_SCK	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\grove
 uartnext	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\groveboard-pro.c	/^	struct Interface *uartnext;$/;"	kind:m	line:103	struct:Board	typeref:struct:Board::Interface	file:	access:public
 uartstart	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\groveboard-pro.c	/^	struct Interface *uartstart;$/;"	kind:m	line:102	struct:Board	typeref:struct:Board::Interface	file:	access:public
 x	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^	BYTE x =  va_arg(*app, const BYTE);$/;"	kind:l	line:155
+x_axis	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^	float x_axis,y_axis,z_axis,totalf;$/;"	kind:l	line:26
 y	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^	BYTE y =  va_arg(*app, const BYTE);$/;"	kind:l	line:156
+y_axis	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^	float x_axis,y_axis,z_axis,totalf;$/;"	kind:l	line:26
+z_axis	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^	float x_axis,y_axis,z_axis,totalf;$/;"	kind:l	line:26

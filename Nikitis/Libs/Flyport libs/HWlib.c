@@ -1156,19 +1156,23 @@ void I2CInit(BYTE I2CSpeed)
  */
 BOOL I2CStart()
 {
-	// Check if I2C1 module is enabled..
-	if(I2C1CONbits.I2CEN == 0)
-		return FALSE;
 	
+	// Check if I2C1 module is enabled..
+	if(I2C1CONbits.I2CEN == 0){
+		return FALSE;
+	}
+			
 	unsigned int i2cCount = 0;
 	I2C1CONbits.SEN = 1;		 		// Sends a start sequence on I2C bus	
 	while(I2C1CONbits.SEN)				// waits the end of start
 	{
 		i2cCount++;
 		Delay10us(1);
-		if (i2cCount == 50000)
-			return FALSE;
+		if (i2cCount == 50000){
+		return FALSE;
+		}
 	}
+	
 	return TRUE;
 }
 
@@ -1563,8 +1567,10 @@ void I2C2Init(BYTE I2CSpeed)
 BOOL I2C2Start()
 {
 	// Check if I2C1 module is enabled..
-	if(I2C2CONbits.I2CEN == 0)
+	if(I2C2CONbits.I2CEN == 0){
 		return FALSE;
+	}
+		
 	
 	unsigned int i2cCount = 0;
 	I2C2CONbits.SEN = 1;		 		// Sends a start sequence on I2C bus	
@@ -1572,9 +1578,11 @@ BOOL I2C2Start()
 	{
 		i2cCount++;
 		Delay10us(1);
-		if (i2cCount == 50000)
+		if (i2cCount == 50000){
 			return FALSE;
+		}
 	}
+	
 	return TRUE;
 }
 
@@ -1703,6 +1711,7 @@ BOOL I2C2Write(BYTE data)
 	
 	I2C2TRN = data;					// Sends a byte on the bus
 
+	
 	// Wait for the end of trasmission or timeout
 	while(cnt < 50000)
 	{

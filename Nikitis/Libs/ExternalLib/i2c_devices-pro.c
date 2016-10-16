@@ -61,6 +61,17 @@ int set_register(BYTE address,BYTE regist, BYTE data)
 	if(I2C2STATbits.ACKSTAT)
 		return -1;
 	I2C2Stop();
+	
+	/*char	g[8];
+	sprintf(g,"WA %x",address);
+    _dbgwrite(g);
+	_dbgwrite("\n");
+	sprintf(g,"WREG %x",regist);
+    _dbgwrite(g);
+	_dbgwrite("\n");
+	sprintf(g,"WD %x",data);
+    _dbgwrite(g);
+	_dbgwrite("\n");*/
 	return 0;
 }
 
@@ -76,6 +87,18 @@ BYTE read_register(BYTE address,BYTE regist)
 	I2C2Stop();
 	I2C2Stop();
 	I2C2Stop();
+	
+	/*char	g[8];
+	sprintf(g,"RA %x",address);
+    _dbgwrite(g);
+	_dbgwrite("\n");
+	sprintf(g,"RREG %x",regist);
+    _dbgwrite(g);
+	_dbgwrite("\n");
+	sprintf(g,"RD %x",data);
+    _dbgwrite(g);
+	_dbgwrite("\n");*/
+	
 	return data;
 }
 
