@@ -66,9 +66,9 @@
 #include "FTPlib.h"
 #include "FSlib.h"
 
-#ifndef _HILO_NO_SIM_CONNECTED_
-#define _HILO_NO_SIM_CONNECTED_
-#endif
+//#ifndef _HILO_NO_SIM_CONNECTED_
+//#define _HILO_NO_SIM_CONNECTED_
+//#endif
 
 #ifndef __HILO_H
 #define __HILO_H

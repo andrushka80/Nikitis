@@ -66,13 +66,14 @@ ERR_PORT_ALREADY_USED	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib
 ERR_WRONG_PORTNUM	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\groveinterfaces-pro.h	76;"	kind:d	line:76
 ERR_WRONG_PORT_TYPE	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\groveinterfaces-pro.h	78;"	kind:d	line:78
 FREQUENCY	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\basicdevices-pro.h	69;"	kind:d	line:69
-FlyportTask	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^void FlyportTask()$/;"	kind:f	line:7
+FlyportTask	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^void FlyportTask()$/;"	kind:f	line:8
 GROVE3AXISCOMPASS_H	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\3axiscompass.h	59;"	kind:d	line:59
 GROVEBOARD_PRO_H	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\groveboard-pro.h	50;"	kind:d	line:50
 GROVEINTERFACES_PRO_H	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\groveinterfaces-pro.h	50;"	kind:d	line:50
 GROVELIB_H	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\grovelib.h	49;"	kind:d	line:49
 GROVELIB_PRO_H	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\grovelib-pro.h	50;"	kind:d	line:50
 GROVE_TIMEOUT	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\basicdevices-pro.h	72;"	kind:d	line:72
+GSMGetOperatorName	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^	_dbgwrite(GSMGetOperatorName());$/;"	kind:p	line:32	file:
 GroveDevicesPowerSupply	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\groveboard-pro.h	/^void GroveDevicesPowerSupply(BOOL enable);$/;"	kind:p	line:61
 GroveDevicesPowerSupply	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\groveboard-pro.c	/^void GroveDevicesPowerSupply(BOOL enable)$/;"	kind:f	line:84
 GroveNest	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\groveboard-pro.h	73;"	kind:d	line:73
@@ -209,7 +210,7 @@ class	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\groveboard-pro.
 class	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\grovelib-pro.c	/^	const struct BoardClass *class = _class;$/;"	kind:l	line:158
 class	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\grovelib-pro.c	/^	const struct SensorClass *class = _class;$/;"	kind:l	line:180
 class	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^	const void *class;$/;"	kind:m	line:62	struct:Oled	file:	access:public
-compass	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^	void *compass = new(Compass, HMC5883_ADDR,SCALE1,46320);$/;"	kind:l	line:16
+compass	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^	void *compass = new(Compass, HMC5883_ADDR,SCALE8,46320);$/;"	kind:l	line:37
 config	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\grovelib-pro.h	/^	int (*config) (void *,va_list *);$/;"	kind:m	line:74	struct:SensorClass	access:public
 configure	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\grovelib-pro.h	/^int configure(void *,...);$/;"	kind:p	line:63
 configure	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\grovelib-pro.c	/^int configure(void *self, ...)$/;"	kind:f	line:110
@@ -255,7 +256,7 @@ get	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\grovelib-
 get	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\grovelib-pro.c	/^float get(void *self, ...)$/;"	kind:f	line:131
 get_	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\grovelib-pro.h	/^	float (*get_)(void *,va_list *);$/;"	kind:m	line:76	struct:SensorClass	access:public
 heading	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\3axiscompass.c	/^				float heading = atan2(datay,datax) + self->declination;$/;"	kind:l	line:232
-heading	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^	unsigned float heading;$/;"	kind:l	line:27
+heading	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^	float heading;$/;"	kind:l	line:48
 i	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^		int i = 0;$/;"	kind:l	line:176
 i	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^		int i;$/;"	kind:l	line:163
 i	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^	int k,i;$/;"	kind:l	line:82
@@ -271,7 +272,7 @@ inter	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^	struc
 isShared	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\groveinterfaces-pro.h	/^	BYTE isShared;		\/\/	Pin sharing - Indicates if the pins of the ports are shared with other ports, like in Arduino UNO Grove shield$/;"	kind:m	line:91	struct:__anon1	access:public
 k	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^	int k,i;$/;"	kind:l	line:82
 logo_BW	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\logo.h	/^const unsigned char logo_BW [] = {$/;"	kind:v	line:6
-msg	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^	char msg[45];$/;"	kind:l	line:25
+msg	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^	char msg[45];$/;"	kind:l	line:45
 myFont	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\oled.h	/^unsigned char myFont[][8]={$/;"	kind:v	line:24
 new	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\grovelib-pro.c	/^void *new(const void *_class, ...)$/;"	kind:f	line:61
 new_board	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\grovelib-pro.c	/^static void *new_board(const void *,va_list ap);$/;"	kind:p	line:56	file:
@@ -348,7 +349,7 @@ timeout	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\input_capture
 timer_32bit	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\input_capture.c	/^	unsigned long timer_32bit;$/;"	kind:l	line:153
 timer_32bit	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\input_capture.c	/^	unsigned long timer_32bit;$/;"	kind:l	line:173
 timer_32bit	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\input_capture.c	/^	unsigned long timer_32bit;$/;"	kind:l	line:193
-totalf	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^	float x_axis,y_axis,z_axis,totalf;$/;"	kind:l	line:26
+totalf	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^	float totalf;$/;"	kind:l	line:47
 type	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\digital_io-pro.c	/^	BYTE type;$/;"	kind:m	line:58	struct:Dig_io	file:	access:public
 type	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^	BYTE type =  va_arg(*app, const BYTE);	$/;"	kind:l	line:153
 uSD_CD	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\groveboard-pro.h	70;"	kind:d	line:70
@@ -359,7 +360,7 @@ uSD_SCK	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\Include\grove
 uartnext	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\groveboard-pro.c	/^	struct Interface *uartnext;$/;"	kind:m	line:103	struct:Board	typeref:struct:Board::Interface	file:	access:public
 uartstart	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\groveboard-pro.c	/^	struct Interface *uartstart;$/;"	kind:m	line:102	struct:Board	typeref:struct:Board::Interface	file:	access:public
 x	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^	BYTE x =  va_arg(*app, const BYTE);$/;"	kind:l	line:155
-x_axis	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^	float x_axis,y_axis,z_axis,totalf;$/;"	kind:l	line:26
+x_axis	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^	float x_axis,y_axis,z_axis;$/;"	kind:l	line:46
 y	C:\Users\Andrei\Documents\Flyport\Nikitis\Libs\ExternalLib\oled.c	/^	BYTE y =  va_arg(*app, const BYTE);$/;"	kind:l	line:156
-y_axis	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^	float x_axis,y_axis,z_axis,totalf;$/;"	kind:l	line:26
-z_axis	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^	float x_axis,y_axis,z_axis,totalf;$/;"	kind:l	line:26
+y_axis	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^	float x_axis,y_axis,z_axis;$/;"	kind:l	line:46
+z_axis	C:\Users\Andrei\Documents\Flyport\Nikitis\taskFlyport.c	/^	float x_axis,y_axis,z_axis;$/;"	kind:l	line:46

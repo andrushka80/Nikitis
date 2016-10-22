@@ -7,10 +7,32 @@
 
 void FlyportTask()
 {	
-	vTaskDelay(ONESECOND_DELAY);
+	vTaskDelay(DELAY_1SEC);
 	
 	// GROVE board
 	void *board = new(Board);
+ 
+	// Wait for GSM Connection successfull
+	_dbgwrite("Waiting network connection...");
+	while((LastConnStatus() != REG_SUCCESS) && (LastConnStatus() != ROAMING))
+	{
+		vTaskDelay(DELAY_200MSEC);
+		IOPut(LED1_Pin, toggle);
+		do
+		{
+			UpdateConnStatus();
+			while(LastExecStat() == OP_EXECUTION)
+				vTaskDelay(1);
+		}while(LastExecStat() != OP_SUCCESS);
+	}
+	vTaskDelay(DELAY_200MSEC);
+	IOPut(LED1_Pin, on);
+    _dbgwrite("Flyport registered on network!\r\n");
+	_dbgwrite("Connected to :");
+	_dbgwrite(GSMGetOperatorName());
+	_dbgwrite("\r\n");
+ 
+	vTaskDelay(DELAY_1SEC);
  
 	// GROVE devices	
 	void *compass = new(Compass, HMC5883_ADDR,SCALE8,46320);
@@ -37,7 +59,7 @@ void FlyportTask()
 		z_axis = get(compass,AXIS_Z);
 		if(readError()) {_dbgwrite("Error reading Z\n");}
 		
-		vTaskDelay(ONESECOND_DELAY);
+		vTaskDelay(DELAY_1SEC);
 		
 		totalf = x_axis * x_axis + y_axis * y_axis + z_axis * z_axis;
 		
@@ -55,6 +77,15 @@ void FlyportTask()
 		
 		if (totalf > FIELD_DETECTION_THSD){
 			_dbgwrite("Detection\n");
+			
+			vTaskDelay(DELAY_200MSEC);
+			
+			SMSSend(PHONE_NUMBER,"Detection!",FALSE);
+			while(LastExecStat() == OP_EXECUTION);
+			if(LastExecStat() == OP_SUCCESS)
+				_dbgwrite("SMS Sent!\n");
+			else
+				_dbgwrite("Error sending SMS\n");
 		}
 		
 	}

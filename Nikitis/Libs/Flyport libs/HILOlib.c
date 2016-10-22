@@ -923,7 +923,7 @@ int cUpdateConnStatus()
 			// Check ECHO
 			countData = 0;
 			resCheck = CheckEcho(countData, tick, cmdReply, msg2send, maxtimeout);
-
+			
 			CheckErr(resCheck, &smInternal, &tick);
 
 			if(resCheck)
@@ -958,6 +958,7 @@ int cUpdateConnStatus()
 				int res = getfield(':', ',', 5, 1, cmdReply, temp, 500);
 				if(res != 1)
 				{
+					_dbgwrite(cmdReply);
 					// Execute Error Handler
 					gsmDebugPrint( "Error in getfield for AT+COPS? command\r\n");
 					break;
