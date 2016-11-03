@@ -64,10 +64,19 @@
 #define		SOCK_CLOSING  	4
 #define		SOCK_CLOSED		5
 
+
+typedef 	struct {
+	
+	int 	minValue;
+	int		maxValue;
+	
+} BER_MINMAX_T;
+
 extern BYTE LastConnStatus();
 extern int	LastExecStat();
 extern int  LastErrorCode();
 extern int  LastSignalRssi();
+extern BER_MINMAX_T	get_ber_measurement(void);
 
 char* GSMGetIMEI();
 char* GSMGetOperatorName();

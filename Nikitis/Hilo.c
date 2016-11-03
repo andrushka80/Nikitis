@@ -62,6 +62,7 @@
 
 #include "Hilo.h"
 #include "p24FJ256GB206.h"
+#include "user_config.h"
 #if defined (FLYPORTGPRS)
 
 extern int *UMODEs[];
@@ -103,6 +104,7 @@ GSMModule 		mainGSM;
 CALLData		mainCall;
 static int		errorCode;
 int             signal_dBm_Gsm = 0;
+int				rxQualGsm = -1;
 
 SMSData			mainSMS;
 static BYTE		IncomingSMS_MemType;
@@ -168,6 +170,79 @@ int LastSignalRssi()
 {
     return signal_dBm_Gsm;
 }
+
+BER_MINMAX_T	get_ber_measurement(void)
+{
+	
+	BER_MINMAX_T	 berRange;
+	
+	switch (rxQualGsm)
+	{
+		case 0:
+			berRange.minValue = 0;
+			berRange.maxValue = 10;
+			
+			return berRange;
+			
+		case 1:
+			berRange.minValue = 26;
+			berRange.maxValue = 30;
+			
+			return berRange;
+			
+		case 2:
+			berRange.minValue = 51;
+			berRange.maxValue = 64;
+			
+			return berRange;
+			
+		case 3:
+			berRange.minValue = 100;
+			berRange.maxValue = 130;
+			
+			return berRange;
+			
+		case 4:
+			berRange.minValue = 190;
+			berRange.maxValue = 270;
+			
+			return berRange;
+			
+		case 5:
+			berRange.minValue = 380;
+			berRange.maxValue = 540;
+			
+			return berRange;
+			
+		case 6:
+			berRange.minValue = 760;
+			berRange.maxValue = 1100;
+			
+			return berRange;
+			
+		case 7:
+			berRange.minValue = 1500;
+			berRange.maxValue = 10000;
+			
+			return berRange;
+		
+		case -1:
+			berRange.minValue = -32768;
+			berRange.maxValue = 32767;
+			
+			return berRange;
+			
+		default:
+			berRange.minValue = -32768;
+			berRange.maxValue = 32767;
+			
+			return berRange;
+		
+	}
+	
+	
+
+}	
 
 void callbackDbg(BYTE smInt)
 {
@@ -742,6 +817,7 @@ void GSMWrite(char* data2wr)
 			return;
 	}
 	HILO_RTS_IO = 1;
+	
 	// transmits till NUL character is encountered 
 	pdsel = (*UMODEs[port] & 6) >>1;
     if (pdsel == 3)                             // checks if TX is 8bits or 9bits
@@ -777,6 +853,15 @@ void GSMWrite(char* data2wr)
         }
     }
     HILO_RTS_IO = 0;
+	
+	#ifdef DEBUG_PRINT_AT_CMD
+	char	dbgMsg[1500];
+	sprintf(dbgMsg,"AT_TX:%s",data2wr);
+	_dbgwrite(dbgMsg);
+	_dbgwrite("\n");
+	#endif
+	
+	
 }
 
 void GSMWriteCh(char chr)
@@ -887,6 +972,10 @@ int GSMpRead(char *towrite, int count)
 	int rd,limit;
 	int bufind_r_temp = bufind_r;
 	
+	#ifdef DEBUG_PRINT_AT_CMD
+	char 	dbgMsg[1500];
+	#endif
+	
 	limit = GSMBufferSize();
 	if (count > limit)
 		count=limit;
@@ -895,6 +984,10 @@ int GSMpRead(char *towrite, int count)
 	while (irx < count)
 	{
         *(towrite+irx) = GSMBuffer[bufind_r_temp];
+		
+		#ifdef DEBUG_PRINT_AT_CMD
+		dbgMsg[irx] = GSMBuffer[bufind_r_temp];
+		#endif
 
 		if (bufind_r_temp == (GSM_BUFFER_SIZE-1))
 			bufind_r_temp = 0;
@@ -911,6 +1004,13 @@ int GSMpRead(char *towrite, int count)
 	}
 	else
 		rd = count;
+	
+	#ifdef DEBUG_PRINT_AT_CMD
+	_dbgwrite("AT_RX:");
+	_dbgwrite(dbgMsg);
+	_dbgwrite("\n");
+	#endif
+	
 	return rd;
 }
 

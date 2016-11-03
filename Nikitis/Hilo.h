@@ -115,4 +115,5 @@ int echoFind(const char* echoStr);
 int getAnswer(const char* answer2src, int lineNumber, char* replyBuffer);
 int getfield(char start, char stop, int maxlen, int parnum, char* srcbuff, char* destbuff, int timeout);
 
+
 #endif

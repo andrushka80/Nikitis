@@ -193,7 +193,8 @@ int cHTTPRequest()
 	int countData;
 	int chars2read;
 	int msgLength = 0;
-        
+
+    
 	switch(smInternal)
     {
         case 0:
@@ -237,10 +238,16 @@ int cHTTPRequest()
             sprintf(msg2send, "AT+KTCPSND=%d,%d\r",xSocket->number, msgLength);
 
             GSMWrite(msg2send);
-            // Start timeout count
+			
+			_dbgwrite(msg2send);
+			_dbgwrite("\n");
+			
+			// Start timeout count
             tick = TickGetDiv64K(); // 1 tick every seconds
             maxtimeout = 75;// 60;
             smInternal++;
+			
+			
 
         case 2:
             vTaskDelay(20);
@@ -248,28 +255,37 @@ int cHTTPRequest()
             countData = 0;
 
             resCheck = CheckEcho(countData, tick, cmdReply, msg2send, maxtimeout);
-
+			_dbgwrite("GSM Echo=");
+			_dbgwrite(cmdReply);
+			_dbgwrite("\n");
+			
             CheckErr(resCheck, &smInternal, &tick);
 
-            if(resCheck)
+			if(resCheck)
             {
-                return mainOpStatus.ErrorCode;
+				return mainOpStatus.ErrorCode;
             }
-
+		
+			
         case 3:
             // Get reply "\r\nCONNECT\r\n"
             vTaskDelay(20);
             sprintf(msg2send, "\r\nCONNECT");
-            chars2read = 2;
+			
+			chars2read = 2;
             countData = 4; // GSM buffer should be: <CR><LF>CONNECT<CR><LF>
 
             resCheck = CheckCmd(countData, chars2read, tick, cmdReply, msg2send, maxtimeout);
 
+			_dbgwrite("GSM Reply=");
+			_dbgwrite(cmdReply);
+			_dbgwrite("\n");
+			
             CheckErr(resCheck, &smInternal, &tick);
 
             if(resCheck)
             {
-                return mainOpStatus.ErrorCode;
+				return mainOpStatus.ErrorCode;
             }
             else
             {
@@ -282,7 +298,7 @@ int cHTTPRequest()
                     GSMWrite("POST ");
                 }
 
-                char* req = strstr(httpReqUrl, "/");
+				char* req = strstr(httpReqUrl, "/");
                 GSMWrite(req);
                 GSMWrite(" HTTP/1.1\r\nHost: ");
                 
@@ -297,6 +313,8 @@ int cHTTPRequest()
 				}
 				
                 GSMWrite("\r\nUser-Agent: Flyport-GPRS\r\n");
+				_dbgwrite("Wrote User Agent\r\n");
+				
                 if(httpParams != HTTP_NO_PARAM)
                 {
                     GSMWrite(httpParams);

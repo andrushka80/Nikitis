@@ -21,7 +21,10 @@
 #define		DELAY_1SEC				100
 #define		DELAY_200MSEC			20
 
-#define		MAX_INBUFF_LENGTH		1500
+#define		MAX_INBUFF_LENGTH			1500
+#define		MAX_HTTP_SERVER_NAME_LEN	50
+#define		MAX_HTTP_SERVER_PORT_LEN	5
+
 
 #define		VEC3D_MAG2(x,y,z) (x*x + y*y + z*z)
 
@@ -35,23 +38,40 @@ typedef enum
 
 typedef enum 
 {
-	SETUP_APN 			= 0,
-	CHECK_CONNECTION 	= 1,
-	OPEN_SOCKET 		= 2,
-	SEND_HTTP_REQ 		= 3,
-	UPDATE_SOCK_STS 	= 4,
-	READ_RSP			= 5,
-	CLOSE_SOCKET		= 6
+	SETUP_APN 				= 0,
+	WAIT_SETUP_APN			= 1,
+	CHECK_CONNECTION 		= 2,
+	WAIT_CHECK_CONNECTION	= 3,
+	OPEN_SOCKET 			= 4,
+	WAIT_OPEN_SOCKET		= 5,
+	SEND_HTTP_REQ 			= 6,
+	WAIT_SEND_HTTP_REQ		= 7,
+	UPDATE_SOCK_STS 		= 8,
+	WAIT_UPDATE_SOCK_STS	= 9,
+	READ_RSP				= 10,
+	WAIT_READ_RSP			= 11,
+	CLOSE_SOCKET			= 12,
+	WAIT_CLOSE_SOCKET		= 13,
+	HTTP_SESSION_END		= 14,
+	HTTP_IDLE					= 15
 } HTTP_ACTION_T;
 
 typedef struct {
-   char  		httpServName[50];
-   char  		httpServPort[5];
-   char  		requestGetURL[50];
-   char  		requestURL[50];
-   TCP_SOCKET	sockHttp;
+   char  		httpServName[MAX_HTTP_SERVER_NAME_LEN];
+   char  		httpServPort[MAX_HTTP_SERVER_PORT_LEN];
+   char  		requestGetURL[MAX_HTTP_SERVER_NAME_LEN];
+   char  		requestURL[MAX_HTTP_SERVER_NAME_LEN];
+   TCP_SOCKET	*sockHttp;
 } HTTP_PARAMS_T;
 
+typedef struct {
+   char  		apnName[MAX_HTTP_SERVER_NAME_LEN];
+   char  		apnUsername[MAX_HTTP_SERVER_PORT_LEN];
+   char  		apnPassword[MAX_HTTP_SERVER_NAME_LEN];
+   char  		modemIpAddr[MAX_HTTP_SERVER_NAME_LEN];
+   char  		primaryDns[MAX_HTTP_SERVER_NAME_LEN];
+   char  		secondaryDns[MAX_HTTP_SERVER_NAME_LEN];
+} APN_PARAMS_T;
 
 //	RTOS components - Semaphore and queues
 extern xQueueHandle xQueue;
@@ -62,9 +82,6 @@ extern xSemaphoreHandle xSemHW;
 extern int xFrontEndStat;
 extern int xErr;
 
-extern BOOL inExecution;
-extern HTTP_ACTION_T nextState;
-
 void FlyportTask();
 
 void wait_until_registered(void);
@@ -72,13 +89,26 @@ void* config_compass(void* board);
 float get_compass_measurement(void* compass, char axis);
 void send_meas_over_sms(void);
 
-#ifdef SEND_HTTP_IS_ENABLED
-void config_apn(char* apnName);
-void check_network_connection(void);
-void open_http_socket(HTTP_PARAMS_T *httpParams);
-void send_http_request(HTTP_PARAMS_T *httpParams, HTTP_REQ_T requestType);
-void update_http_socket_status(HTTP_PARAMS_T *httpParams);
-void read_http_response(HTTP_PARAMS_T *httpParams, char* inBuff);
-void close_http_socket(HTTP_PARAMS_T *httpParams);
-void init_http_params(HTTP_PARAMS_T *httpParams);
-#endif
+//#ifdef SEND_HTTP_IS_ENABLED
+int wait_config_apn(void);
+int wait_check_network_connection(void);
+int wait_open_http_socket(void);
+int wait_send_http_request(void);
+int wait_update_http_socket_status(void);
+int wait_read_http_response(void);
+int wait_close_http_socket(void);
+
+void read_http_response(HTTP_PARAMS_T*, char*);
+void send_http_request(HTTP_PARAMS_T*, HTTP_REQ_T);
+
+void dbgprint_http_state(int, int);
+void init_http_params(HTTP_PARAMS_T*);
+char* get_http_state_name(int);
+
+void	dbgprint_ber_range(void);
+void	dbgprint_rssi(void);
+
+void 	init_apn_params(APN_PARAMS_T*);
+void	config_apn(APN_PARAMS_T*);
+
+//#endif

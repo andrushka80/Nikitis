@@ -98,13 +98,15 @@ void TCPClientOpen(TCP_SOCKET* sock, char* tcpaddr, char* tcpport)
 {
 	BOOL opok = FALSE;
 	
+	_dbgwrite("Opening TCP socket\n");
+	
 	if(mainGSM.HWReady != TRUE)
 		return;
 	
 	// Check if sock->number is INVALID SOCKET
 	if(sock->number != INVALID_SOCKET)
 		return;
-			
+	
 	//	Function cycles until it is not executed
 	while (!opok)
 	{
@@ -126,6 +128,8 @@ void TCPClientOpen(TCP_SOCKET* sock, char* tcpaddr, char* tcpport)
 			xIPAddress[termChar] = '\0';
 			xSocket = sock;
 			//xSocket->number = INVALID_SOCKET;
+			
+			_dbgwrite("TCP Socket open command sent to GSM stack\n");
 			
 			xQueueSendToBack(xQueue,&mainOpStatus.Function,0);	//	Send COMMAND request to the stack
 			
@@ -154,9 +158,12 @@ int cTCPClientOpen()
 	int countData;
 	int chars2read;
 	
+	char dbgMsg[50];
+	
 	switch(smInternal)
 	{
 		case 0:
+			
 			// Check if Buffer is free
 			if(GSMBufferSize() > 0)
 			{
@@ -168,17 +175,23 @@ int cTCPClientOpen()
 				smInternal++;
 				
 		case 1:	
+			
 			// Send first AT command
 			// ----------	TCP Connection Configuration	----------
 			sprintf(msg2send, "AT+KTCPCFG=0,0,\"%s\",%d\r",xIPAddress, xTCPPort);
 			
 			GSMWrite(msg2send);
+			
+			_dbgwrite(msg2send);
+			_dbgwrite("\n");
+			
 			// Start timeout count
 			tick = TickGetDiv64K(); // 1 tick every seconds
 			maxtimeout = 2;
 			smInternal++;
 			
 		case 2:
+			
 			vTaskDelay(1);
 			// Check ECHO 
 			countData = 0;
@@ -193,6 +206,7 @@ int cTCPClientOpen()
 			}
 			
 		case 3:
+			
 			// Get reply "+KTCPCFG: <socket>"
 			vTaskDelay(1);
 			sprintf(msg2send, "+KTCPCFG");
@@ -200,6 +214,10 @@ int cTCPClientOpen()
 			countData = 2; // GSM buffer should be: <CR><LF>+KTCPCFG: <socket><CR><LF>
 			
 			resCheck = CheckCmd(countData, chars2read, tick, cmdReply, msg2send, maxtimeout);
+			
+			_dbgwrite("\nGSM Reply=");
+			_dbgwrite(cmdReply);
+			_dbgwrite("\n");
 			
 			CheckErr(resCheck, &smInternal, &tick);
 			
@@ -225,6 +243,7 @@ int cTCPClientOpen()
 			}	
 			
 		case 4:
+			
 			// Get reply (\r\nOK\r\n)
 			vTaskDelay(1);
 			// Get OK
@@ -235,28 +254,39 @@ int cTCPClientOpen()
 			
 			CheckErr(resCheck, &smInternal, &tick);
 			
+			_dbgwrite("\nGSM Reply=");
+			_dbgwrite(cmdReply);
+			_dbgwrite("\n");
+			
 			if(resCheck)
 			{
 				return mainOpStatus.ErrorCode;
 			}
 
         case 5:
+			
 			// AT+KCNXTIMER
-			sprintf(msg2send, "AT+KCNXTIMER=0,60,2,70\r");
+			sprintf(msg2send, "AT+KCNXTIMER=0,90,2,70\r");
 
 			GSMWrite(msg2send);
+			
+			_dbgwrite(msg2send);
+			_dbgwrite("\n");
+			
+			
 			// Start timeout count
 			tick = TickGetDiv64K(); // 1 tick every seconds
 			maxtimeout = 2;
 			smInternal++;
 
 		case 6:
+			
 			vTaskDelay(1);
 			// Check ECHO
 			countData = 0;
 
 			resCheck = CheckEcho(countData, tick, cmdReply, msg2send, maxtimeout);
-
+			
 			CheckErr(resCheck, &smInternal, &tick);
 
 			if(resCheck)
@@ -265,6 +295,7 @@ int cTCPClientOpen()
 			}
 
 		case 7:
+			
 			// Get reply (\r\nOK\r\n)
 			vTaskDelay(1);
 			// Get OK
@@ -275,28 +306,39 @@ int cTCPClientOpen()
 
 			CheckErr(resCheck, &smInternal, &tick);
 
+			_dbgwrite("\nGSM Reply=");
+			_dbgwrite(cmdReply);
+			_dbgwrite("\n");
+			
+			
 			if(resCheck)
 			{
 				return mainOpStatus.ErrorCode;
 			}
 			
         case 8://5:
+			
 			// ----------	Initiate TCP Connection	----------
 			sprintf(msg2send, "AT+KTCPCNX=%d\r",xSocket->number);
 			
 			GSMWrite(msg2send);
+			
+			_dbgwrite(msg2send);
+			_dbgwrite("\n");
+			
 			// Start timeout count
 			tick = TickGetDiv64K(); // 1 tick every seconds
 			maxtimeout = 70;
 			smInternal++;
 			
         case 9://6:
+			
 			vTaskDelay(1);
 			// Check ECHO 
 			countData = 0;
 			
 			resCheck = CheckEcho(countData, tick, cmdReply, msg2send, maxtimeout);
-						
+			
 			CheckErr(resCheck, &smInternal, &tick);
 			
 			if(resCheck)
@@ -306,6 +348,7 @@ int cTCPClientOpen()
 			}
 			
         case 10://7:
+			
 			// Get reply (\r\nOK\r\n)
 			vTaskDelay(1);
 			// Get OK
@@ -313,6 +356,10 @@ int cTCPClientOpen()
 			chars2read = 2;
 			countData = 2; // GSM buffer should be: <CR><LF>OK<CR><LF>
 			resCheck = CheckCmd(countData, chars2read, tick, cmdReply, msg2send, maxtimeout);
+			
+			_dbgwrite("\nGSM Reply=");
+			_dbgwrite(cmdReply);
+			_dbgwrite("\n");
 			
 			CheckErr(resCheck, &smInternal, &tick);
 			

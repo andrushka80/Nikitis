@@ -68,6 +68,7 @@ extern int mainGSMStateMachine;
 extern OpStat	mainOpStatus;
 extern GSMModule mainGSM;
 extern int signal_dBm_Gsm;
+extern int rxQualGsm;
 
 extern int CheckCmd(int countData, int chars2read, const DWORD tick, char* cmdReply, const char* msg2send, const BYTE maxtimeout);
 extern int CheckEcho(int countData, const DWORD tick, char* cmdReply, const char* msg2send, const BYTE maxtimeout);
@@ -1147,6 +1148,7 @@ int cGSMSignalQualityUpdate(void)
                     int ber = atoi(temp);
                     if(ber > 7)
                         ber = -1; // not valid
+					rxQualGsm = ber;
                 }
             }
 

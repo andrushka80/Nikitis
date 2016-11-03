@@ -101,6 +101,7 @@ void APNConfig(char* apn, char* login, char* passw, char* ip, char* dns1, char* 
 	if(mainGSM.HWReady != TRUE)
 		return;
 	
+	
 	//	Function cycles until it is not executed
 	while (!opok)
 	{
@@ -169,6 +170,10 @@ int cAPNConfig()
 								xApn, xLogin, xPassw, xIp, xDns1, xDns2);
 			
 			GSMWrite(msg2send);
+			
+			_dbgwrite(msg2send);
+			_dbgwrite("\n");
+			
 			// Start timeout count
 			tick = TickGetDiv64K(); // 1 tick every seconds
 			maxtimeout = 2 + 3;
@@ -207,6 +212,9 @@ int cAPNConfig()
 			{
 				vTaskDelay(200); // To prevent too fast TCP connection attempt
 			}
+
+			_dbgwrite("GSM Reply: ");
+			_dbgwrite(cmdReply);
 			
 		default:
 			break;

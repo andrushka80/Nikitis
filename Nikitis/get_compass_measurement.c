@@ -39,8 +39,10 @@ float get_compass_measurement(void *compass, char axis){
 		_dbgwrite(msg);
 	}
 	else {
+		#ifdef 	DEBUG_PRINT_LEVEL2
 		sprintf(msg,"%c %.2f milli-Gauss\n\r",axisDisplay, output);
 		_dbgwrite(msg);
+		#endif
 	}
 	#endif
 
