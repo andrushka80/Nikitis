@@ -21,9 +21,33 @@
 #define		DELAY_1SEC				100
 #define		DELAY_200MSEC			20
 
-#define		MAX_INBUFF_LENGTH			1500
+//Various TCP timer values
+#define		TCP_TIMER_DIV64K_1SEC			0x0001
+#define		TCP_TIMER_DIV64K_10SEC			0x000A
+#define		TCP_TIMER_DIV64K_30SEC			0x001F
+#define		TCP_TIMER_DIV64K_1MIN			0x0039
+#define		TCP_TIMER_DIV64K_2MIN			0x0072
+#define		TCP_TIMER_DIV64K_5MIN			0x011E
+#define		TCP_TIMER_DIV64K_10MIN			0x023C
+#define		TCP_TIMER_DIV64K_15MIN			0x035A
+#define		TCP_TIMER_DIV64K_30MIN			0x06B4
+#define		TCP_TIMER_DIV64K_1HR			0x0D69
+#define		TCP_TIMER_DIV64K_12HR			0xA0EE
+
+#define		MAX_INBUFF_LENGTH			1000
 #define		MAX_HTTP_SERVER_NAME_LEN	50
-#define		MAX_HTTP_SERVER_PORT_LEN	5
+#define		MAX_HTTP_SERVER_PORT_LEN	6
+#define		MAX_JSON_PAYLOAD_LENGTH		1000
+#define		MAX_OPERATOR_NAME_LEN		16
+#define		MAX_IMEI_LEN				16
+
+#define		MAX_DEVICE_ID_LENGTH		10
+
+#define		MIN_RSSI					-113
+#define		MAX_RSSI					-51
+
+#define		MIN_BATTERY_LVL				0
+#define		MAX_BATTERY_LVL				100
 
 
 #define		VEC3D_MAG2(x,y,z) (x*x + y*y + z*z)
@@ -53,7 +77,7 @@ typedef enum
 	CLOSE_SOCKET			= 12,
 	WAIT_CLOSE_SOCKET		= 13,
 	HTTP_SESSION_END		= 14,
-	HTTP_IDLE					= 15
+	HTTP_IDLE				= 15
 } HTTP_ACTION_T;
 
 typedef struct {
@@ -73,6 +97,17 @@ typedef struct {
    char  		secondaryDns[MAX_HTTP_SERVER_NAME_LEN];
 } APN_PARAMS_T;
 
+typedef struct {
+   int  		numDetections;
+   int			numDetectedCars;
+   int			minRssi;
+   int			maxRssi;
+   int			batteryLevel;
+   char			deviceId[MAX_DEVICE_ID_LENGTH+1];
+   char			operatorName[MAX_OPERATOR_NAME_LEN+1];
+   char			imeiNumber[MAX_IMEI_LEN+1];
+} MEAS_REPORT_T;
+
 //	RTOS components - Semaphore and queues
 extern xQueueHandle xQueue;
 extern xSemaphoreHandle xSemFrontEnd;
@@ -84,10 +119,14 @@ extern int xErr;
 
 void FlyportTask();
 
-void wait_until_registered(void);
-void* config_compass(void* board);
-float get_compass_measurement(void* compass, char axis);
-void send_meas_over_sms(void);
+void 	wait_until_registered(MEAS_REPORT_T*);
+void* 	config_compass(void* board);
+float 	get_compass_measurement(void* compass, char axis);
+void 	send_meas_over_sms(void);
+void 	process_measurements(MEAS_REPORT_T*, float, float, float);
+void 	init_meas_report(MEAS_REPORT_T*);
+void 	reset_meas_report(MEAS_REPORT_T*);
+int 	build_json_report(char*, MEAS_REPORT_T* );
 
 //#ifdef SEND_HTTP_IS_ENABLED
 int wait_config_apn(void);
@@ -99,7 +138,7 @@ int wait_read_http_response(void);
 int wait_close_http_socket(void);
 
 void read_http_response(HTTP_PARAMS_T*, char*);
-void send_http_request(HTTP_PARAMS_T*, HTTP_REQ_T);
+void send_http_request(HTTP_PARAMS_T*, HTTP_REQ_T, char*);
 
 void dbgprint_http_state(int, int);
 void init_http_params(HTTP_PARAMS_T*);

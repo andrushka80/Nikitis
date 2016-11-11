@@ -3,10 +3,13 @@
 #include "user_config.h"
 #include "grovelib.h"
  
-void wait_until_registered(){ 
- 
+void wait_until_registered(MEAS_REPORT_T* measReport)
+{ 
+	
+	#ifdef DEBUG_PRINT_LEVEL0
 	_dbgwrite("Waiting network connection...");
-
+	#endif
+	
 	while((LastConnStatus() != REG_SUCCESS) && (LastConnStatus() != ROAMING))
 	{
 		vTaskDelay(DELAY_200MSEC);
@@ -20,12 +23,21 @@ void wait_until_registered(){
 			
 		}while(LastExecStat() != OP_SUCCESS);
 	}
+	
 	vTaskDelay(DELAY_200MSEC);
 	IOPut(LED1_Pin, on);
 
+	
+	strncpy(measReport->operatorName, GSMGetOperatorName(),MAX_OPERATOR_NAME_LEN);
+	strncpy(measReport->imeiNumber, GSMGetIMEI(),MAX_IMEI_LEN);
+
+	
+	#ifdef DEBUG_PRINT_LEVEL0
 	_dbgwrite("Flyport registered on network!\r\n");
 	_dbgwrite("Connected to :");
-	_dbgwrite(GSMGetOperatorName());
+	_dbgwrite(measReport->operatorName);
 	_dbgwrite("\r\n");
+	#endif
 
+	
 }

@@ -7,6 +7,8 @@
 //#define		DEBUG_PRINT_LEVEL2 //measurements
 //#define		DEBUG_PRINT_AT_CMD
 
+#define		DEVICE_ID				"0000000001"
+
 #define		PHONE_NUMBER			"0040722745715"
 
 #define		APN_NAME				"live.vodafone.com"
@@ -24,8 +26,11 @@
 
 //#define		SEND_SMS_IS_ENABLED
 #define		SEND_HTTP_IS_ENABLED
+//#define		SENSOR_IS_ATTACHED
 
 #define		FIELD_DETECTION_THSD	(float) 300000
+
+#define		SERVER_REPORT_PERIOD	TCP_TIMER_DIV64K_30SEC
 
 ///////////////////////////////////////////
 

@@ -2,7 +2,7 @@
 #include "taskFlyport.h"
 #include "user_config.h"
  
-void send_http_request(HTTP_PARAMS_T *httpParams, HTTP_REQ_T requestType){ 
+void send_http_request(HTTP_PARAMS_T *httpParams, HTTP_REQ_T requestType, char* jsonReport){ 
 
 	char data[200];
 	char paramsHttp[120];
@@ -26,14 +26,12 @@ void send_http_request(HTTP_PARAMS_T *httpParams, HTTP_REQ_T requestType){
 			break;
 
 		case POST_ADD:    // HTTP POST with additional params
-			// Prepare Data Content:
-			sprintf(data, "This is my data!\r\nAdditional params are included using HTTPRequest function!\r\n\r\n");
-
+			
 			// Fill additional params:
-			sprintf(paramsHttp, "Content-Type: application/json\r\nContent-Length: %d", strlen(data));
+			sprintf(paramsHttp, "Content-Type: application/json\r\nContent-Length: %d", strlen(jsonReport));
 
 			// Launch the request
-			HTTPRequest(httpParams->sockHttp, HTTP_POST, httpParams->requestURL, data, paramsHttp);
+			HTTPRequest(httpParams->sockHttp, HTTP_POST, httpParams->requestURL, jsonReport, paramsHttp);
 			break;
 			
 		case IDLE:

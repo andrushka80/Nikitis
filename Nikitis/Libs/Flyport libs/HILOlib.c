@@ -691,7 +691,7 @@ int cUpdateConnStatus()
 	DWORD tick;
 	int countData = 0;
 	int chars2read = 1;
-
+	
 	switch (smInternal)
 	{
 		case 0:
@@ -699,13 +699,16 @@ int cUpdateConnStatus()
 			{
 				// Parse Unsol Message
 				mainGSMStateMachine = SM_GSM_CMD_PENDING;
+				
+				
 				return -1;
 			}
 			else
 				smInternal++;
 
 		case 1:
-            // Send AT command
+            
+			// Send AT command
 			sprintf(msg2send, "AT+CGREG?\r");
 			GSMWrite(msg2send);
             // Start timeout count
@@ -713,8 +716,11 @@ int cUpdateConnStatus()
 			// Update max timeout for this command: 2 seconds (3 seconds to decrease error frequency...)
 			maxtimeout = 3 + 2;
 			smInternal++;
+			
+			
 
         case 2:
+			
 			vTaskDelay(2);
 			// Check ECHO
 			countData = 0;
@@ -728,8 +734,11 @@ int cUpdateConnStatus()
 			}
             maxtimeout = 3 + 2;
             smInternal++;
+			
+			
             
         case 3:
+			
 			vTaskDelay(2);
             maxtimeout = 3 + 2;
 			// Get +CREG
@@ -822,6 +831,8 @@ int cUpdateConnStatus()
             }
 
 		case 4:
+			
+						
 			// Get reply (OK, BUSY, ERROR, etc...)
 			vTaskDelay(2);
             maxtimeout = 3 + 2;
@@ -856,7 +867,8 @@ int cUpdateConnStatus()
             }
 
         case 5:
-            // Write here AT+CGATT=1
+            
+			// Write here AT+CGATT=1
             // Send AT command
             mainGSM.IsGPRSPacketServiceReady = FALSE;
 			sprintf(msg2send, "AT+CGATT=1\r");
@@ -868,6 +880,7 @@ int cUpdateConnStatus()
 			smInternal++;
 
         case 6:
+				
 			vTaskDelay(2);
 			// Check ECHO
 			countData = 0;
@@ -883,6 +896,7 @@ int cUpdateConnStatus()
             smInternal++;
 
 		case 7:
+		
 			// Get reply (OK, BUSY, ERROR, etc...)
 			vTaskDelay(2);
             maxtimeout = 3 + 2;
@@ -905,7 +919,8 @@ int cUpdateConnStatus()
 
         // AT+COPS
         case 8:
-            // Send AT command
+		
+			// Send AT command
 			sprintf(msg2send, "AT+COPS?\r");
 			GSMWrite(msg2send);
 
@@ -920,6 +935,7 @@ int cUpdateConnStatus()
 			smInternal++;
 
         case 9:
+		
 			vTaskDelay(2);
 			// Check ECHO
 			countData = 0;
@@ -935,6 +951,7 @@ int cUpdateConnStatus()
             smInternal++;
 
         case 10:
+		
 			vTaskDelay(2);
             maxtimeout = 120 + 2;
 			// Get +CREG
@@ -981,6 +998,7 @@ int cUpdateConnStatus()
             }
 
 		case 11:
+				
 			// Get reply (OK, BUSY, ERROR, etc...)
 			vTaskDelay(2);
             maxtimeout = 120 + 2;

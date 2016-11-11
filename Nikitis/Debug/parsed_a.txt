@@ -1,0 +1,91 @@
+00014e98 <_wait_until_registered>:
+   14e98:	02 00 fa    	lnk       #0x2
+   14e9a:	00 0f 78    	mov.w     w0, [w14]
+   14e9c:	e0 93 2b    	mov.w     #0xb93e, w0
+   14e9e:	be 3c 02    	call      0x3cbe <__dbgwrite>
+   14ea0:	00 00 00 
+   14ea2:	17 00 37    	bra       0x14ed2 <.L2>
+
+00014ea4 <.L3>:
+   14ea4:	40 01 20    	mov.w     #0x14, w0
+   14ea6:	01 00 20    	mov.w     #0x0, w1
+   14ea8:	f0 e6 02    	call      0xe6f0 <_vTaskDelay>
+   14eaa:	00 00 00 
+   14eac:	21 00 20    	mov.w     #0x2, w1
+   14eae:	40 01 20    	mov.w     #0x14, w0
+   14eb0:	0a 3e 02    	call      0x3e0a <_IOPut>
+   14eb2:	00 00 00 
+
+00014eb4 <.L4>:
+   14eb4:	5e b3 02    	call      0xb35e <_UpdateConnStatus>
+   14eb6:	00 00 00 
+   14eb8:	04 00 37    	bra       0x14ec2 <.L5>
+
+00014eba <.L6>:
+   14eba:	10 00 20    	mov.w     #0x1, w0
+   14ebc:	01 00 20    	mov.w     #0x0, w1
+   14ebe:	f0 e6 02    	call      0xe6f0 <_vTaskDelay>
+   14ec0:	00 00 00 
+
+00014ec2 <.L5>:
+   14ec2:	66 61 02    	call      0x6166 <_LastExecStat>
+   14ec4:	00 00 00 
+   14ec6:	e1 0f 40    	add.w     w0, #0x1, [w15]
+   14ec8:	f8 ff 32    	bra       Z, 0x14eba <.L6>
+   14eca:	66 61 02    	call      0x6166 <_LastExecStat>
+   14ecc:	00 00 00 
+   14ece:	00 00 e0    	cp0.w     w0
+   14ed0:	f1 ff 3a    	bra       NZ, 0x14eb4 <.L4>
+
+00014ed2 <.L2>:
+   14ed2:	5a 61 02    	call      0x615a <_LastConnStatus>
+   14ed4:	00 00 00 
+   14ed6:	e1 4f 50    	sub.b     w0, #0x1, [w15]
+   14ed8:	04 00 32    	bra       Z, 0x14ee2 <.L8>
+   14eda:	5a 61 02    	call      0x615a <_LastConnStatus>
+   14edc:	00 00 00 
+   14ede:	e5 4f 50    	sub.b     w0, #0x5, [w15]
+   14ee0:	e1 ff 3a    	bra       NZ, 0x14ea4 <.L3>
+
+00014ee2 <.L8>:
+   14ee2:	40 01 20    	mov.w     #0x14, w0
+   14ee4:	01 00 20    	mov.w     #0x0, w1
+   14ee6:	f0 e6 02    	call      0xe6f0 <_vTaskDelay>
+   14ee8:	00 00 00 
+   14eea:	11 00 20    	mov.w     #0x1, w1
+   14eec:	40 01 20    	mov.w     #0x14, w0
+   14eee:	0a 3e 02    	call      0x3e0a <_IOPut>
+   14ef0:	00 00 00 
+   
+   
+   14ef2:	f8 ac 02    	call      0xacf8 <_GSMGetOperatorName>
+   14ef4:	00 00 00 
+   14ef6:	80 00 78    	mov.w     w0, w1
+   14ef8:	1e 01 78    	mov.w     [w14], w2
+   14efa:	74 00 41    	add.w     w2, #0x14, w0
+   14efc:	02 01 20    	mov.w     #0x10, w2
+   14efe:	6e 05 02    	call      0x56e <_strncpy>
+   14f00:	00 00 00 
+   14f02:	f0 ac 02    	call      0xacf0 <_GSMGetIMEI>
+   14f04:	00 00 00 
+   14f06:	80 00 78    	mov.w     w0, w1
+   14f08:	42 02 20    	mov.w     #0x24, w2
+   14f0a:	1e 00 41    	add.w     w2, [w14], w0
+   14f0c:	02 01 20    	mov.w     #0x10, w2
+   14f0e:	6e 05 02    	call      0x56e <_strncpy>
+   14f10:	00 00 00 
+   14f12:	c0 95 2b    	mov.w     #0xb95c, w0
+   14f14:	be 3c 02    	call      0x3cbe <__dbgwrite>
+   14f16:	00 00 00 
+   14f18:	d0 97 2b    	mov.w     #0xb97d, w0
+   14f1a:	be 3c 02    	call      0x3cbe <__dbgwrite>
+   14f1c:	00 00 00 
+   14f1e:	9e 00 78    	mov.w     [w14], w1
+   14f20:	74 80 40    	add.w     w1, #0x14, w0
+   14f22:	be 3c 02    	call      0x3cbe <__dbgwrite>
+   14f24:	00 00 00 
+   14f26:	c0 98 2b    	mov.w     #0xb98c, w0
+   14f28:	be 3c 02    	call      0x3cbe <__dbgwrite>
+   14f2a:	00 00 00 
+   14f2c:	00 80 fa    	ulnk      
+   14f2e:	00 00 06    	return   

@@ -9,7 +9,7 @@
 void* config_compass(void *board){
 
 	void	*compass;
-
+	
 	// GROVE devices	
 	compass = new(Compass, HMC5883_ADDR,SCALE8,46320);
 	attachToBoard(board, compass, I2C);

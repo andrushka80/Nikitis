@@ -5,19 +5,29 @@
 #include "user_config.h"
 #include "Hilo.h"
 
+#define USE_AND_OR
+#include "timer.h"
+
 void FlyportTask()
 {	
-	 
-	float 			measBx, measBy, measBz, totalB2;
 	void			*compass	= NULL;
-	int 			apnSuccess;
+	
+	float 			measBx = 0, measBy = 0, measBz = 0;
+
+	int 			apnSuccess = 0;
 	TCP_SOCKET 		sockHttp;
+	
+	long int		tick = 0, tock = 0;
+	BOOL			timeToSendReport 	= FALSE;
+	BOOL			sendHttpMsg 		= FALSE;
+	
+	char			jsonReport[MAX_JSON_PAYLOAD_LENGTH];
+	int				jsonReportLength;
 	
 	#ifdef DEBUG_PRINT_LEVEL1
 	char dbgMsg[100];
 	#endif
 
-	BOOL			sendHttpMsg 	= FALSE;
 	HTTP_ACTION_T	nextState 		= HTTP_IDLE;
 	HTTP_ACTION_T	prevState 		= HTTP_IDLE;
 	
@@ -26,10 +36,17 @@ void FlyportTask()
 
 	APN_PARAMS_T	*apnParams = NULL;
 	apnParams = malloc(sizeof(APN_PARAMS_T));
+
+	MEAS_REPORT_T	*measReport = NULL;
+	measReport = malloc(sizeof(MEAS_REPORT_T));
 	
 	char 			inBuff[MAX_INBUFF_LENGTH];
+
+/////////////////////////////////
 	
 	vTaskDelay(DELAY_1SEC);
+	
+	init_meas_report(measReport);
 	
 	#ifdef SEND_HTTP_IS_ENABLED
 	httpParams->sockHttp = &sockHttp;
@@ -48,46 +65,54 @@ void FlyportTask()
 	// GROVE board
 	void *board = new(Board);
  
-	wait_until_registered();
- 
+	//Wait for registration and get operator name & IMEI
+	wait_until_registered(measReport);
+	
 	vTaskDelay(DELAY_1SEC);
  
+	#ifdef SENSOR_IS_ATTACHED
 	compass = config_compass(board);
+	#endif
 	
 	#ifdef DEBUG_PRINT_LEVEL0
 	_dbgwrite("Starting measurement...\n");
 	#endif
 	
-	//DEBUG!!!
-	sendHttpMsg = TRUE;
-		
+	tick = TickGetDiv64K();
+	
 	while(1)
 	{
 		
+		#ifdef SENSOR_IS_ATTACHED
 		measBx = get_compass_measurement(compass, AXIS_X);
 		measBy = get_compass_measurement(compass, AXIS_Y);
 		measBz = get_compass_measurement(compass, AXIS_Z);
+		#endif
 		
 		vTaskDelay(DELAY_200MSEC);
 		
-		totalB2 = VEC3D_MAG2(measBx,measBy,measBz);
+		#ifdef SENSOR_IS_ATTACHED
+		process_measurements(measReport, measBx, measBy, measBz);
+		#endif
 		
-		if (totalB2 > FIELD_DETECTION_THSD)
+		tock = TickGetDiv64K();
+		
+		timeToSendReport = (tock - tick >= SERVER_REPORT_PERIOD);
+		
+		if (timeToSendReport)
 		{
-			#ifdef DEBUG_PRINT_LEVEL0
-			_dbgwrite("Detection\n");
-			#endif
-			
-			vTaskDelay(DELAY_200MSEC);
+			sendHttpMsg = TRUE;
+			jsonReportLength = build_json_report(jsonReport, measReport);
+			reset_meas_report(measReport);//Need to restart measurement cycle
+			tick = tock;
 			
 			#ifdef SEND_SMS_IS_ENABLED
 			send_meas_over_sms();
 			vTaskDelay(DELAY_200MSEC);
 			#endif
 			
-			#ifdef SEND_HTTP_IS_ENABLED
-			//sendHttpMsg = TRUE;--uncomment this once HTTP debug is complete
-			#endif
+			_dbgwrite(jsonReport);
+			
 		}
 
 		#ifdef SEND_HTTP_IS_ENABLED
@@ -123,7 +148,6 @@ void FlyportTask()
 				#endif
 			
 				UpdateConnStatus();
-				GSMSignalQualityUpdate();
 				
 				nextState = WAIT_CHECK_CONNECTION;
 				prevState = CHECK_CONNECTION;
@@ -138,7 +162,6 @@ void FlyportTask()
 				nextState = wait_check_network_connection();
 				prevState = WAIT_CHECK_CONNECTION;
 				
-				dbgprint_ber_range();
 				dbgprint_rssi();
 				
 				break;
@@ -170,7 +193,7 @@ void FlyportTask()
 				dbgprint_http_state(nextState, prevState);
 				#endif
 				
-				send_http_request(httpParams, GET);
+				send_http_request(httpParams, HTTP_POST, jsonReport);
 				
 				nextState = WAIT_SEND_HTTP_REQ;
 				prevState = SEND_HTTP_REQ;
@@ -258,8 +281,7 @@ void FlyportTask()
 				dbgprint_http_state(nextState, prevState);
 				#endif
 			
-				//DEBUG ONLY
-				//sendHttpMsg = FALSE;
+				sendHttpMsg = FALSE;
 				
 				nextState = HTTP_IDLE;
 				prevState = HTTP_SESSION_END;
