@@ -7,9 +7,9 @@ void process_measurements(MEAS_REPORT_T*  measReport, float measBx, float measBy
 
 	float 	totalB2 = 0;
 	BOOL	carIsDetected = FALSE;
-	int 	currRssi = 0;
+	//int 	currRssi = 0;
 
-	GSMSignalQualityUpdate();
+	//GSMSignalQualityUpdate();
 	
 	totalB2 = VEC3D_MAG2(measBx,measBy,measBz);
 	carIsDetected = (totalB2 > FIELD_DETECTION_THSD);
@@ -24,15 +24,15 @@ void process_measurements(MEAS_REPORT_T*  measReport, float measBx, float measBy
 
 	}
 	
-	currRssi = LastSignalRssi();
-	if (currRssi < measReport->minRssi)
-	{
-		measReport->minRssi = currRssi;
-	}
-	
-	if (currRssi > measReport->maxRssi)
-	{
-		measReport->maxRssi = currRssi;
-	}	
+	//currRssi = LastSignalRssi();
+	//if (currRssi < measReport->minRssi)
+	//{
+	//	measReport->minRssi = currRssi;
+	//}
+	//
+	//if (currRssi > measReport->maxRssi)
+	//{
+	//	measReport->maxRssi = currRssi;
+	//}
 
 }

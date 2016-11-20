@@ -8,6 +8,16 @@
 #define USE_AND_OR
 #include "timer.h"
 
+char		jsonReport[MAX_JSON_PAYLOAD_LENGTH];
+char		inBuff[MAX_INBUFF_LENGTH];
+
+APN_PARAMS_T	apnProfiles[3];
+HTTP_PARAMS_T	httpProfiles[3];
+
+HTTP_ACTION_T	httpNextState 		= HTTP_IDLE;
+HTTP_ACTION_T	httpPrevState 		= HTTP_IDLE;
+BOOL			sendHttpMsg 		= FALSE;
+
 void FlyportTask()
 {	
 	void			*compass	= NULL;
@@ -19,28 +29,22 @@ void FlyportTask()
 	
 	long int		tick = 0, tock = 0;
 	BOOL			timeToSendReport 	= FALSE;
-	BOOL			sendHttpMsg 		= FALSE;
 	
-	char			jsonReport[MAX_JSON_PAYLOAD_LENGTH];
+
 	int				jsonReportLength;
 	
 	#ifdef DEBUG_PRINT_LEVEL1
 	char dbgMsg[100];
 	#endif
-
-	HTTP_ACTION_T	nextState 		= HTTP_IDLE;
-	HTTP_ACTION_T	prevState 		= HTTP_IDLE;
 	
 	HTTP_PARAMS_T	*httpParams = NULL;
 	httpParams = malloc(sizeof(HTTP_PARAMS_T));
-
+	
 	APN_PARAMS_T	*apnParams = NULL;
 	apnParams = malloc(sizeof(APN_PARAMS_T));
 
 	MEAS_REPORT_T	*measReport = NULL;
 	measReport = malloc(sizeof(MEAS_REPORT_T));
-	
-	char 			inBuff[MAX_INBUFF_LENGTH];
 
 /////////////////////////////////
 	
@@ -50,8 +54,15 @@ void FlyportTask()
 	
 	#ifdef SEND_HTTP_IS_ENABLED
 	httpParams->sockHttp = &sockHttp;
-	init_http_params(httpParams);
-	init_apn_params(apnParams);
+	
+	init_http_profiles(httpProfiles);
+	init_apn_profiles(apnProfiles);
+	
+	apnParams = &apnProfiles[APN_PROFILE];
+	
+	httpParams = &httpProfiles[HTTP_SERVER_PROFILE];
+	httpParams->sockHttp = &sockHttp;
+	httpParams->sockHttp->number = INVALID_SOCKET;
 	
 	config_apn(apnParams);
 	
@@ -102,7 +113,8 @@ void FlyportTask()
 		if (timeToSendReport)
 		{
 			sendHttpMsg = TRUE;
-			jsonReportLength = build_json_report(jsonReport, measReport);
+			process_rssi(measReport);
+			jsonReportLength = build_json_report(jsonReport, measReport, httpParams);
 			reset_meas_report(measReport);//Need to restart measurement cycle
 			tick = tock;
 			
@@ -116,175 +128,182 @@ void FlyportTask()
 		}
 
 		#ifdef SEND_HTTP_IS_ENABLED
+		// Run the HTTP state machine
+		run_http_state_machine(apnParams,httpParams);
+		#endif	
 		
-		switch(nextState)
+	}
+}
+
+void run_http_state_machine(APN_PARAMS_T  * apnParams, HTTP_PARAMS_T * httpParams)
+{
+	switch(httpNextState)
 		{
-			
 			case SETUP_APN :
 				#ifdef DEBUG_PRINT_LEVEL1
-				dbgprint_http_state(nextState, prevState);
+				dbgprint_http_state(httpNextState, httpPrevState);
 				#endif
 				
 				config_apn(apnParams);
 				
-				nextState = WAIT_SETUP_APN;
-				prevState = SETUP_APN;
+				httpNextState = WAIT_SETUP_APN;
+				httpPrevState = SETUP_APN;
 				
 				break;
 				
 			case WAIT_SETUP_APN :
 				#ifdef DEBUG_PRINT_LEVEL1
-				dbgprint_http_state(nextState, prevState);
+				dbgprint_http_state(httpNextState, httpPrevState);
 				#endif
 			
-				nextState = wait_config_apn();
-				prevState = WAIT_SETUP_APN;
+				httpNextState = wait_config_apn();
+				httpPrevState = WAIT_SETUP_APN;
 				
 				break;
 			
 			case CHECK_CONNECTION :
 				#ifdef DEBUG_PRINT_LEVEL1
-				dbgprint_http_state(nextState, prevState);
+				dbgprint_http_state(httpNextState, httpPrevState);
 				#endif
 			
 				UpdateConnStatus();
 				
-				nextState = WAIT_CHECK_CONNECTION;
-				prevState = CHECK_CONNECTION;
+				httpNextState = WAIT_CHECK_CONNECTION;
+				httpPrevState = CHECK_CONNECTION;
 				
 				break;
 			
 			case WAIT_CHECK_CONNECTION :
 				#ifdef DEBUG_PRINT_LEVEL1
-				dbgprint_http_state(nextState, prevState);
+				dbgprint_http_state(httpNextState, httpPrevState);
 				#endif
 			
-				nextState = wait_check_network_connection();
-				prevState = WAIT_CHECK_CONNECTION;
+				httpNextState = wait_check_network_connection();
+				httpPrevState = WAIT_CHECK_CONNECTION;
 				
-				dbgprint_rssi();
+				//dbgprint_rssi();
 				
 				break;
 			
 			case OPEN_SOCKET :
 				#ifdef DEBUG_PRINT_LEVEL1
-				dbgprint_http_state(nextState, prevState);
+				dbgprint_http_state(httpNextState, httpPrevState);
 				#endif
 			
 				HTTPOpen(httpParams -> sockHttp, httpParams -> httpServName, httpParams -> httpServPort);
 				
-				nextState = WAIT_OPEN_SOCKET;
-				prevState = OPEN_SOCKET;
+				httpNextState = WAIT_OPEN_SOCKET;
+				httpPrevState = OPEN_SOCKET;
 				
 				break;
 				
 			case WAIT_OPEN_SOCKET	:
 				#ifdef DEBUG_PRINT_LEVEL1
-				dbgprint_http_state(nextState, prevState);
+				dbgprint_http_state(httpNextState, httpPrevState);
 				#endif
 			
-				nextState = wait_open_http_socket();
-				prevState = WAIT_OPEN_SOCKET;
+				httpNextState = wait_open_http_socket();
+				httpPrevState = WAIT_OPEN_SOCKET;
 				
 				break;
 			
 			case SEND_HTTP_REQ :
 				#ifdef DEBUG_PRINT_LEVEL1
-				dbgprint_http_state(nextState, prevState);
+				dbgprint_http_state(httpNextState, httpPrevState);
 				#endif
 				
 				send_http_request(httpParams, HTTP_POST, jsonReport);
 				
-				nextState = WAIT_SEND_HTTP_REQ;
-				prevState = SEND_HTTP_REQ;
+				httpNextState = WAIT_SEND_HTTP_REQ;
+				httpPrevState = SEND_HTTP_REQ;
 				
 				break;
 				
 			case WAIT_SEND_HTTP_REQ :
 				#ifdef DEBUG_PRINT_LEVEL1
-				dbgprint_http_state(nextState, prevState);
+				dbgprint_http_state(httpNextState, httpPrevState);
 				#endif
 			
-				nextState = wait_send_http_request();
-				prevState = WAIT_SEND_HTTP_REQ;
+				httpNextState = wait_send_http_request();
+				httpPrevState = WAIT_SEND_HTTP_REQ;
 				
 				break;
 				
 			case UPDATE_SOCK_STS :
 				#ifdef DEBUG_PRINT_LEVEL1
-				dbgprint_http_state(nextState, prevState);
+				dbgprint_http_state(httpNextState, httpPrevState);
 				#endif
 			
 				HTTPStatus(httpParams->sockHttp);
 				
-				nextState = WAIT_UPDATE_SOCK_STS;
-				prevState = UPDATE_SOCK_STS;
+				httpNextState = WAIT_UPDATE_SOCK_STS;
+				httpPrevState = UPDATE_SOCK_STS;
 				
 				break;
 				
 			case WAIT_UPDATE_SOCK_STS :
 				#ifdef DEBUG_PRINT_LEVEL1
-				dbgprint_http_state(nextState, prevState);
+				dbgprint_http_state(httpNextState, httpPrevState);
 				#endif
 			
-				nextState = wait_update_http_socket_status();
-				prevState = WAIT_UPDATE_SOCK_STS;
+				httpNextState = wait_update_http_socket_status();
+				httpPrevState = WAIT_UPDATE_SOCK_STS;
 				
 				break;
 			
 			case READ_RSP :
 				#ifdef DEBUG_PRINT_LEVEL1
-				dbgprint_http_state(nextState, prevState);
+				dbgprint_http_state(httpNextState, httpPrevState);
 				#endif
 			
 				read_http_response(httpParams, inBuff);
 				
-				nextState = WAIT_READ_RSP;
-				prevState = READ_RSP;
+				httpNextState = WAIT_READ_RSP;
+				httpPrevState = READ_RSP;
 				
 				break;
 				
 			case WAIT_READ_RSP :
 				#ifdef DEBUG_PRINT_LEVEL1
-				dbgprint_http_state(nextState, prevState);
+				dbgprint_http_state(httpNextState, httpPrevState);
 				#endif
 
-				nextState = wait_read_http_response();
-				prevState = WAIT_READ_RSP;
+				httpNextState = wait_read_http_response();
+				httpPrevState = WAIT_READ_RSP;
 				
 				break;
 			
 			case CLOSE_SOCKET :
 				#ifdef DEBUG_PRINT_LEVEL1
-				dbgprint_http_state(nextState, prevState);
+				dbgprint_http_state(httpNextState, httpPrevState);
 				#endif
 				
 				HTTPClose(httpParams->sockHttp);
 				
-				nextState = WAIT_CLOSE_SOCKET;
-				prevState = CLOSE_SOCKET;
+				httpNextState = WAIT_CLOSE_SOCKET;
+				httpPrevState = CLOSE_SOCKET;
 				
 				break;
 			
 			case WAIT_CLOSE_SOCKET :
 				#ifdef DEBUG_PRINT_LEVEL1
-				dbgprint_http_state(nextState, prevState);
+				dbgprint_http_state(httpNextState, httpPrevState);
 				#endif
 			
-				nextState = wait_close_http_socket();
-				prevState = WAIT_CLOSE_SOCKET;
+				httpNextState = wait_close_http_socket();
+				httpPrevState = WAIT_CLOSE_SOCKET;
 				
 				break;
 
 			case HTTP_SESSION_END :
 				#ifdef DEBUG_PRINT_LEVEL1
-				dbgprint_http_state(nextState, prevState);
+				dbgprint_http_state(httpNextState, httpPrevState);
 				#endif
 			
 				sendHttpMsg = FALSE;
 				
-				nextState = HTTP_IDLE;
-				prevState = HTTP_SESSION_END;
+				httpNextState = HTTP_IDLE;
+				httpPrevState = HTTP_SESSION_END;
 				
 				_dbgwrite(inBuff);
 				
@@ -292,7 +311,7 @@ void FlyportTask()
 				
 			case HTTP_IDLE 	:
 				#ifdef DEBUG_PRINT_LEVEL1
-				dbgprint_http_state(nextState, prevState);
+				dbgprint_http_state(httpNextState, httpPrevState);
 				#endif
 				
 				if ((sendHttpMsg == TRUE) && (LastExecStat() != OP_EXECUTION))
@@ -301,15 +320,15 @@ void FlyportTask()
 					if(LastExecStat() == OP_TIMEOUT)
 					{
 						// Restart state machine since GSM Task restarted GPRS Module!
-						nextState = SETUP_APN;
+						httpNextState = SETUP_APN;
 					}
 					else
 					{
-						nextState = CHECK_CONNECTION;
+						httpNextState = CHECK_CONNECTION;
 					}
 				}
 				
-				prevState = HTTP_IDLE;
+				httpPrevState = HTTP_IDLE;
 				
 				break;
 			
@@ -317,7 +336,5 @@ void FlyportTask()
 			
 				break;
 		}
-		#endif	
 		
-	}
 }

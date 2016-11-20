@@ -5,7 +5,6 @@
  
 void wait_until_registered(MEAS_REPORT_T* measReport)
 { 
-	
 	#ifdef DEBUG_PRINT_LEVEL0
 	_dbgwrite("Waiting network connection...");
 	#endif
@@ -28,8 +27,8 @@ void wait_until_registered(MEAS_REPORT_T* measReport)
 	IOPut(LED1_Pin, on);
 
 	
-	strncpy(measReport->operatorName, GSMGetOperatorName(),MAX_OPERATOR_NAME_LEN);
-	strncpy(measReport->imeiNumber, GSMGetIMEI(),MAX_IMEI_LEN);
+	sprintf(measReport->operatorName, "%s", GSMGetOperatorName());
+	sprintf(measReport->imeiNumber, "%s", GSMGetIMEI());
 
 	
 	#ifdef DEBUG_PRINT_LEVEL0

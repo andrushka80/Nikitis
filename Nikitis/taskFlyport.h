@@ -34,14 +34,18 @@
 #define		TCP_TIMER_DIV64K_1HR			0x0D69
 #define		TCP_TIMER_DIV64K_12HR			0xA0EE
 
-#define		MAX_INBUFF_LENGTH			1000
+#define		MAX_INBUFF_LENGTH			3000
 #define		MAX_HTTP_SERVER_NAME_LEN	50
 #define		MAX_HTTP_SERVER_PORT_LEN	6
-#define		MAX_JSON_PAYLOAD_LENGTH		1000
-#define		MAX_OPERATOR_NAME_LEN		16
-#define		MAX_IMEI_LEN				16
+#define		MAX_HTTP_HEADER_LEN         200
+#define		MAX_JSON_PAYLOAD_LENGTH		3000
+#define		MAX_OPERATOR_NAME_LEN		32
+#define		MAX_IMEI_LEN				32
+#define		MAX_APIKEY_LEN              100
+#define     MAX_CARRIOTS_DEV_ID         64
+#define		MAX_POST_HEADER_LEN			150
 
-#define		MAX_DEVICE_ID_LENGTH		10
+#define		MAX_DEVICE_ID_LENGTH		64
 
 #define		MIN_RSSI					-113
 #define		MAX_RSSI					-51
@@ -59,6 +63,7 @@ typedef enum
 	POST_NO_ADD = 1,
 	POST_ADD = 2
 } HTTP_REQ_T;
+
 
 typedef enum 
 {
@@ -80,11 +85,24 @@ typedef enum
 	HTTP_IDLE				= 15
 } HTTP_ACTION_T;
 
+typedef enum 
+{
+	APN_NAME 				= 0,
+	APN_USERNAME			= 1,
+	APN_PASSWORD	 		= 2,
+	APN_MODEM_IP			= 3,
+	APN_PRIMARY_DNS			= 4,
+	APN_SECONDARY_DNS		= 5
+} APN_CONFIG_T;
+
 typedef struct {
    char  		httpServName[MAX_HTTP_SERVER_NAME_LEN];
    char  		httpServPort[MAX_HTTP_SERVER_PORT_LEN];
    char  		requestGetURL[MAX_HTTP_SERVER_NAME_LEN];
    char  		requestURL[MAX_HTTP_SERVER_NAME_LEN];
+   char  		apikey[MAX_APIKEY_LEN];
+   char         devId[MAX_CARRIOTS_DEV_ID];
+   char			postHeader[MAX_POST_HEADER_LEN];
    TCP_SOCKET	*sockHttp;
 } HTTP_PARAMS_T;
 
@@ -103,9 +121,9 @@ typedef struct {
    int			minRssi;
    int			maxRssi;
    int			batteryLevel;
-   char			deviceId[MAX_DEVICE_ID_LENGTH+1];
-   char			operatorName[MAX_OPERATOR_NAME_LEN+1];
-   char			imeiNumber[MAX_IMEI_LEN+1];
+   char			deviceId[MAX_DEVICE_ID_LENGTH];
+   char			operatorName[MAX_OPERATOR_NAME_LEN];
+   char			imeiNumber[MAX_IMEI_LEN];
 } MEAS_REPORT_T;
 
 //	RTOS components - Semaphore and queues
@@ -124,9 +142,10 @@ void* 	config_compass(void* board);
 float 	get_compass_measurement(void* compass, char axis);
 void 	send_meas_over_sms(void);
 void 	process_measurements(MEAS_REPORT_T*, float, float, float);
+void 	process_rssi(MEAS_REPORT_T*);
 void 	init_meas_report(MEAS_REPORT_T*);
 void 	reset_meas_report(MEAS_REPORT_T*);
-int 	build_json_report(char*, MEAS_REPORT_T* );
+int 	build_json_report(char*, MEAS_REPORT_T*, HTTP_PARAMS_T* httpParams);
 
 //#ifdef SEND_HTTP_IS_ENABLED
 int wait_config_apn(void);
@@ -141,13 +160,14 @@ void read_http_response(HTTP_PARAMS_T*, char*);
 void send_http_request(HTTP_PARAMS_T*, HTTP_REQ_T, char*);
 
 void dbgprint_http_state(int, int);
-void init_http_params(HTTP_PARAMS_T*);
+void init_http_profiles(HTTP_PARAMS_T* httpProfiles);
 char* get_http_state_name(int);
+void run_http_state_machine(APN_PARAMS_T  * apnParams, HTTP_PARAMS_T * httpParams);
 
 void	dbgprint_ber_range(void);
 void	dbgprint_rssi(void);
 
-void 	init_apn_params(APN_PARAMS_T*);
+void 	init_apn_profiles(APN_PARAMS_T* apnProfiles);
 void	config_apn(APN_PARAMS_T*);
 
 //#endif

@@ -1,7 +1,7 @@
 #include "taskFlyport.h"
 #include "user_config.h"
  
-int build_json_report(char* jsonReport, MEAS_REPORT_T* measReport)
+int build_json_report(char* jsonReport, MEAS_REPORT_T* measReport, HTTP_PARAMS_T* httpParams)
 { 
 
 	char 	strToWrite[50];
@@ -19,7 +19,14 @@ int build_json_report(char* jsonReport, MEAS_REPORT_T* measReport)
 	strcpy(&jsonReport[index],strToWrite);
 	index += strlen(strToWrite);
 	
-	strcpy(strToWrite,"\"device\":\"Flyport GPRS\",\n");
+	strcpy(strToWrite,"\"device\":\"");
+	strcpy(&jsonReport[index],strToWrite);
+	index += strlen(strToWrite);
+	
+	strcpy(&jsonReport[index],httpParams->devId);
+	index += strlen(httpParams->devId);
+	
+	strcpy(strToWrite,"\",\n");
 	strcpy(&jsonReport[index],strToWrite);
 	index += strlen(strToWrite);
 	
@@ -31,9 +38,8 @@ int build_json_report(char* jsonReport, MEAS_REPORT_T* measReport)
 	strcpy(&jsonReport[index],strToWrite);
 	index += strlen(strToWrite);	
 	
-	strncpy(strToWrite,measReport->deviceId, MAX_DEVICE_ID_LENGTH);
-	strcpy(&jsonReport[index],strToWrite);
-	index += strlen(strToWrite);
+	strcpy(&jsonReport[index],measReport->deviceId);
+	index += strlen(measReport->deviceId);
 	
 	strcpy(strToWrite,"\",\n");
 	strcpy(&jsonReport[index],strToWrite);
@@ -43,9 +49,8 @@ int build_json_report(char* jsonReport, MEAS_REPORT_T* measReport)
 	strcpy(&jsonReport[index],strToWrite);
 	index += strlen(strToWrite);	
 	
-	strncpy(strToWrite,measReport->imeiNumber, MAX_IMEI_LEN);
-	strcpy(&jsonReport[index],strToWrite);
-	index += strlen(strToWrite);
+	strcpy(&jsonReport[index],measReport->imeiNumber);
+	index += strlen(measReport->imeiNumber);
 	
 	strcpy(strToWrite,"\",\n");
 	strcpy(&jsonReport[index],strToWrite);
@@ -99,15 +104,14 @@ int build_json_report(char* jsonReport, MEAS_REPORT_T* measReport)
 	strcpy(&jsonReport[index],strToWrite);
 	index += strlen(strToWrite);
 	
-	strcpy(strToWrite,"\"66\":\"");
+	strcpy(strToWrite,"\"66\":");
 	strcpy(&jsonReport[index],strToWrite);
 	index += strlen(strToWrite);	
 	
-	strncpy(strToWrite,measReport->operatorName,MAX_OPERATOR_NAME_LEN);
-	strcpy(&jsonReport[index],strToWrite);
-	index += strlen(strToWrite);
+	strcpy(&jsonReport[index],measReport->operatorName);
+	index += strlen(measReport->operatorName);
 	
-	strcpy(strToWrite,"\",\n");
+	strcpy(strToWrite,"\n");
 	strcpy(&jsonReport[index],strToWrite);
 	index += strlen(strToWrite);
 	
