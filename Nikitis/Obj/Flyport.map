@@ -1,4 +1,4 @@
-Microchip Technology Inc, vv3_24 (A) x8÷“…¸i+
+Microchip Technology Inc, vv3_24 (A) «
 
 Tool Name:
   c:\program files (x86)\microchip\mplab c30\bin\bin\..\bin/pic30-coff-ld.exe
@@ -259,9 +259,9 @@ section                    address   length (PC units)   length (bytes) (dec)
 .const                      0x25be              0x17de          0x23cd  (9165)
 .text                       0x3d9c              0xba0c         0x11712  (71442)
 .dinit                      0xf7a8               0x744           0xae6  (2790)
-.text                       0xfeec              0x592a          0x85bf  (34239)
+.text                       0xfeec              0x5932          0x85cb  (34251)
 
-                     Total program memory used (bytes):        0x20121  (131361) 50%
+                     Total program memory used (bytes):        0x2012d  (131373) 50%
 
 
 Data Memory  [Origin = 0x800, Length = 0x18000]
@@ -965,49 +965,49 @@ External Symbols in Program Memory (by address):
                   0x0148f4                  _vPortExitCritical
                   0x01490e                  __T5Interrupt
                   0x01493c                  _init_http_profiles
-                  0x014a74                  _TickInit
-                  0x014af8                  _TickGet
-                  0x014b04                  _TickGetDiv256
-                  0x014b34                  _TickGetDiv64K
-                  0x014b64                  _TickConvertToMilliseconds
-                  0x014b8a                  __T1Interrupt
-                  0x014ba2                  _vListInitialise
-                  0x014bd4                  _vListInitialiseItem
-                  0x014be2                  _vListInsertEnd
-                  0x014c26                  _vListInsert
-                  0x014c86                  _uxListRemove
-                  0x014cce                  _HWInit
-                  0x014df6                  _DelayMs
-                  0x014e22                  _Delay10us
-                  0x014f06                  _init_apn_profiles
-                  0x014ff0                  _send_http_request
-                  0x0150ce                  _get_http_state_name
-                  0x015178                  _set_register
-                  0x0151d4                  _read_register
-                  0x015210                  _wait_until_registered
-                  0x0152a4                  _process_measurements
-                  0x015330                  _wait_check_network_connection
-                  0x0153b8                  x_analog_in-pro.o:_An_i_ctor
-                  0x0153ce                  x_analog_in-pro.o:_An_i_dtor
-                  0x0153f4                  x_analog_in-pro.o:_An_i_attach
-                  0x015416                  x_analog_in-pro.o:_An_i_getan_i
-                  0x01543c                  _get_compass_measurement
-                  0x0154ac                  _vPortYield
-                  0x015500                  _config_compass
-                  0x01554a                  _init_meas_report
-                  0x015594                  _read_http_response
-                  0x0155d4                  _wait_close_http_socket
-                  0x01560c                  _wait_config_apn
-                  0x015644                  _wait_open_http_socket
-                  0x01567c                  _wait_read_http_response
-                  0x0156b4                  _wait_send_http_request
-                  0x0156ec                  _wait_update_http_socket_status
-                  0x015724                  _config_apn
-                  0x015756                  _dbgprint_http_state
-                  0x015788                  _send_meas_over_sms
-                  0x0157b6                  _reset_meas_report
-                  0x0157dc                  _dbgprint_rssi
-                  0x0157fa                  _process_rssi
+                  0x014a7c                  _TickInit
+                  0x014b00                  _TickGet
+                  0x014b0c                  _TickGetDiv256
+                  0x014b3c                  _TickGetDiv64K
+                  0x014b6c                  _TickConvertToMilliseconds
+                  0x014b92                  __T1Interrupt
+                  0x014baa                  _vListInitialise
+                  0x014bdc                  _vListInitialiseItem
+                  0x014bea                  _vListInsertEnd
+                  0x014c2e                  _vListInsert
+                  0x014c8e                  _uxListRemove
+                  0x014cd6                  _HWInit
+                  0x014dfe                  _DelayMs
+                  0x014e2a                  _Delay10us
+                  0x014f0e                  _init_apn_profiles
+                  0x014ff8                  _send_http_request
+                  0x0150d6                  _get_http_state_name
+                  0x015180                  _set_register
+                  0x0151dc                  _read_register
+                  0x015218                  _wait_until_registered
+                  0x0152ac                  _process_measurements
+                  0x015338                  _wait_check_network_connection
+                  0x0153c0                  x_analog_in-pro.o:_An_i_ctor
+                  0x0153d6                  x_analog_in-pro.o:_An_i_dtor
+                  0x0153fc                  x_analog_in-pro.o:_An_i_attach
+                  0x01541e                  x_analog_in-pro.o:_An_i_getan_i
+                  0x015444                  _get_compass_measurement
+                  0x0154b4                  _vPortYield
+                  0x015508                  _config_compass
+                  0x015552                  _init_meas_report
+                  0x01559c                  _read_http_response
+                  0x0155dc                  _wait_close_http_socket
+                  0x015614                  _wait_config_apn
+                  0x01564c                  _wait_open_http_socket
+                  0x015684                  _wait_read_http_response
+                  0x0156bc                  _wait_send_http_request
+                  0x0156f4                  _wait_update_http_socket_status
+                  0x01572c                  _config_apn
+                  0x01575e                  _dbgprint_http_state
+                  0x015790                  _send_meas_over_sms
+                  0x0157be                  _reset_meas_report
+                  0x0157e4                  _dbgprint_rssi
+                  0x015802                  _process_rssi
 
 External Symbols in Program Memory (by name):
 
@@ -1025,8 +1025,8 @@ External Symbols in Program Memory (by name):
                   0x007d24                  _CheckEcho
                   0x007d9c                  _CheckErr
                   0x013882                  _CmdCheck
-                  0x014e22                  _Delay10us
-                  0x014df6                  _DelayMs
+                  0x014e2a                  _Delay10us
+                  0x014dfe                  _DelayMs
                   0x0060ea                  _EEEraseData
                   0x006224                  _EEEraseString
                   0x005a0a                  _EEGetPageSize
@@ -1078,7 +1078,7 @@ External Symbols in Program Memory (by name):
                   0x01120e                  _HTTPReadData
                   0x010c46                  _HTTPRequest
                   0x010c38                  _HTTPStatus
-                  0x014cce                  _HWInit
+                  0x014cd6                  _HWInit
                   0x011720                  _HashAddData
                   0x00657a                  _HiloComTest
                   0x006498                  _HiloInit
@@ -1201,11 +1201,11 @@ External Symbols in Program Memory (by name):
                   0x00a88a                  _TCPRxFlush
                   0x00a5d4                  _TCPStatus
                   0x00a37c                  _TCPWrite
-                  0x014b64                  _TickConvertToMilliseconds
-                  0x014af8                  _TickGet
-                  0x014b04                  _TickGetDiv256
-                  0x014b34                  _TickGetDiv64K
-                  0x014a74                  _TickInit
+                  0x014b6c                  _TickConvertToMilliseconds
+                  0x014b00                  _TickGet
+                  0x014b0c                  _TickGetDiv256
+                  0x014b3c                  _TickGetDiv64K
+                  0x014a7c                  _TickInit
                   0x004a42                  _UARTBufferSize
                   0x004a10                  _UARTFlush
                   0x004646                  _UARTInit
@@ -1244,7 +1244,7 @@ External Symbols in Program Memory (by name):
                   0x012fe4                  __RTCCInterrupt
                   0x013e64                  __StackError
                   0x0003de                  __Stoul
-                  0x014b8a                  __T1Interrupt
+                  0x014b92                  __T1Interrupt
                   0x01490e                  __T5Interrupt
                   0x013d20                  __U1RXInterrupt
                   0x013d48                  __U2RXInterrupt
@@ -1364,11 +1364,11 @@ External Symbols in Program Memory (by name):
                   0x00b3b0                  _cUpdateConnStatus
                   0x00625c                  _callbackDbg
                   0x0006b8                  _calloc
-                  0x015724                  _config_apn
-                  0x015500                  _config_compass
+                  0x01572c                  _config_apn
+                  0x015508                  _config_compass
                   0x013ba4                  _configure
-                  0x015756                  _dbgprint_http_state
-                  0x0157dc                  _dbgprint_rssi
+                  0x01575e                  _dbgprint_http_state
+                  0x0157e4                  _dbgprint_rssi
                   0x013b4a                  _delet_
                   0x013b18                  _delete_
                   0x001918                  _div
@@ -1377,14 +1377,14 @@ External Symbols in Program Memory (by name):
                   0x000650                  _free
                   0x013c1c                  _get
                   0x007a58                  _getAnswer
-                  0x01543c                  _get_compass_measurement
-                  0x0150ce                  _get_http_state_name
+                  0x015444                  _get_compass_measurement
+                  0x0150d6                  _get_http_state_name
                   0x0077fc                  _getfield
                   0x006280                  _gsmDebugPrint
                   0x00f6e4                  _hexatob
-                  0x014f06                  _init_apn_profiles
+                  0x014f0e                  _init_apn_profiles
                   0x01493c                  _init_http_profiles
-                  0x01554a                  _init_meas_report
+                  0x015552                  _init_meas_report
                   0x0006d6                  _isspace
                   0x0015de                  _ldiv
                   0x0138e0                  _main
@@ -1394,19 +1394,19 @@ External Symbols in Program Memory (by name):
                   0x000642                  _memset
                   0x013aee                  _new
                   0x014304                  _nothigToDo
-                  0x0152a4                  _process_measurements
-                  0x0157fa                  _process_rssi
+                  0x0152ac                  _process_measurements
+                  0x015802                  _process_rssi
                   0x01465c                  _pvPortMalloc
                   0x0147e6                  _pxPortInitialiseStack
                   0x013c6c                  _readError
-                  0x015594                  _read_http_response
-                  0x0151d4                  _read_register
-                  0x0157b6                  _reset_meas_report
+                  0x01559c                  _read_http_response
+                  0x0151dc                  _read_register
+                  0x0157be                  _reset_meas_report
                   0x012aa8                  _run_http_state_machine
-                  0x014ff0                  _send_http_request
-                  0x015788                  _send_meas_over_sms
+                  0x014ff8                  _send_http_request
+                  0x015790                  _send_meas_over_sms
                   0x013be0                  _set
-                  0x015178                  _set_register
+                  0x015180                  _set_register
                   0x00054c                  _sprintf
                   0x00052e                  _strchr
                   0x0003c0                  _strcpy
@@ -1416,20 +1416,20 @@ External Symbols in Program Memory (by name):
                   0x0006e6                  _tolower
                   0x00f5b6                  _uitoa
                   0x00f634                  _ultoa
-                  0x014c86                  _uxListRemove
+                  0x014c8e                  _uxListRemove
                   0x0109e8                  _uxQueueMessagesWaiting
                   0x010a00                  _uxQueueMessagesWaitingFromISR
                   0x00ea98                  _uxTaskGetNumberOfTasks
-                  0x014ba2                  _vListInitialise
-                  0x014bd4                  _vListInitialiseItem
-                  0x014c26                  _vListInsert
-                  0x014be2                  _vListInsertEnd
+                  0x014baa                  _vListInitialise
+                  0x014bdc                  _vListInitialiseItem
+                  0x014c2e                  _vListInsert
+                  0x014bea                  _vListInsertEnd
                   0x0148ac                  _vPortEndScheduler
                   0x0148e0                  _vPortEnterCritical
                   0x0148f4                  _vPortExitCritical
                   0x01474c                  _vPortFree
                   0x0147b0                  _vPortInitialiseBlocks
-                  0x0154ac                  _vPortYield
+                  0x0154b4                  _vPortYield
                   0x010a10                  _vQueueDelete
                   0x00e6da                  _vTaskDelay
                   0x00e662                  _vTaskDelayUntil
@@ -1447,14 +1447,14 @@ External Symbols in Program Memory (by name):
                   0x00e7f4                  _vTaskSuspend
                   0x00e9b6                  _vTaskSuspendAll
                   0x00eb5c                  _vTaskSwitchContext
-                  0x015330                  _wait_check_network_connection
-                  0x0155d4                  _wait_close_http_socket
-                  0x01560c                  _wait_config_apn
-                  0x015644                  _wait_open_http_socket
-                  0x01567c                  _wait_read_http_response
-                  0x0156b4                  _wait_send_http_request
-                  0x015210                  _wait_until_registered
-                  0x0156ec                  _wait_update_http_socket_status
+                  0x015338                  _wait_check_network_connection
+                  0x0155dc                  _wait_close_http_socket
+                  0x015614                  _wait_config_apn
+                  0x01564c                  _wait_open_http_socket
+                  0x015684                  _wait_read_http_response
+                  0x0156bc                  _wait_send_http_request
+                  0x015218                  _wait_until_registered
+                  0x0156f4                  _wait_update_http_socket_status
                   0x0147a8                  _xPortGetFreeHeapSize
                   0x01487c                  _xPortStartScheduler
                   0x01067c                  _xQueueCreateMutex
@@ -1482,10 +1482,10 @@ External Symbols in Program Memory (by name):
                   0x0125d6                  x_3axiscompass.o:_Compass_ctor
                   0x0126ce                  x_3axiscompass.o:_Compass_dtor
                   0x012738                  x_3axiscompass.o:_Compass_get
-                  0x0153f4                  x_analog_in-pro.o:_An_i_attach
-                  0x0153b8                  x_analog_in-pro.o:_An_i_ctor
-                  0x0153ce                  x_analog_in-pro.o:_An_i_dtor
-                  0x015416                  x_analog_in-pro.o:_An_i_getan_i
+                  0x0153fc                  x_analog_in-pro.o:_An_i_attach
+                  0x0153c0                  x_analog_in-pro.o:_An_i_ctor
+                  0x0153d6                  x_analog_in-pro.o:_An_i_dtor
+                  0x01541e                  x_analog_in-pro.o:_An_i_getan_i
                   0x0141fa                  x_digital_io-pro.o:_Dig_io_attach
                   0x014122                  x_digital_io-pro.o:_Dig_io_ctor
                   0x0141bc                  x_digital_io-pro.o:_Dig_io_dtor
@@ -1831,7 +1831,7 @@ __CONFIG1         0x02abfe          0x2
                   0x000014          0x4 LONG 0x13dbe DEFINED (__INT0Interrupt)?<code 339> (__INT0Interrupt):<code 339> (__DefaultInterrupt)
                   0x000016          0x4 LONG 0x11bfe DEFINED (__IC1Interrupt)?<code 339> (__IC1Interrupt):<code 339> (__DefaultInterrupt)
                   0x000018          0x4 LONG 0x13dbe DEFINED (__OC1Interrupt)?<code 339> (__OC1Interrupt):<code 339> (__DefaultInterrupt)
-                  0x00001a          0x4 LONG 0x14b8a DEFINED (__T1Interrupt)?<code 339> (__T1Interrupt):<code 339> (__DefaultInterrupt)
+                  0x00001a          0x4 LONG 0x14b92 DEFINED (__T1Interrupt)?<code 339> (__T1Interrupt):<code 339> (__DefaultInterrupt)
                   0x00001c          0x4 LONG 0x13dbe DEFINED (__Interrupt4)?<code 339> (__Interrupt4):<code 339> (__DefaultInterrupt)
                   0x00001e          0x4 LONG 0x11c38 DEFINED (__IC2Interrupt)?<code 339> (__IC2Interrupt):<code 339> (__DefaultInterrupt)
                   0x000020          0x4 LONG 0x13dbe DEFINED (__OC2Interrupt)?<code 339> (__OC2Interrupt):<code 339> (__DefaultInterrupt)
@@ -1959,7 +1959,7 @@ __CONFIG1         0x02abfe          0x2
                   0x000114          0x4 LONG 0x13dbe DEFINED (__AltINT0Interrupt)?<code 339> (__AltINT0Interrupt):DEFINED (__INT0Interrupt)?<code 339> (__INT0Interrupt):<code 339> (__DefaultInterrupt)
                   0x000116          0x4 LONG 0x11bfe DEFINED (__AltIC1Interrupt)?<code 339> (__AltIC1Interrupt):DEFINED (__IC1Interrupt)?<code 339> (__IC1Interrupt):<code 339> (__DefaultInterrupt)
                   0x000118          0x4 LONG 0x13dbe DEFINED (__AltOC1Interrupt)?<code 339> (__AltOC1Interrupt):DEFINED (__OC1Interrupt)?<code 339> (__OC1Interrupt):<code 339> (__DefaultInterrupt)
-                  0x00011a          0x4 LONG 0x14b8a DEFINED (__AltT1Interrupt)?<code 339> (__AltT1Interrupt):DEFINED (__T1Interrupt)?<code 339> (__T1Interrupt):<code 339> (__DefaultInterrupt)
+                  0x00011a          0x4 LONG 0x14b92 DEFINED (__AltT1Interrupt)?<code 339> (__AltT1Interrupt):DEFINED (__T1Interrupt)?<code 339> (__T1Interrupt):<code 339> (__DefaultInterrupt)
                   0x00011c          0x4 LONG 0x13dbe DEFINED (__AltInterrupt4)?<code 339> (__AltInterrupt4):DEFINED (__Interrupt4)?<code 339> (__Interrupt4):<code 339> (__DefaultInterrupt)
                   0x00011e          0x4 LONG 0x11c38 DEFINED (__AltIC2Interrupt)?<code 339> (__AltIC2Interrupt):DEFINED (__IC2Interrupt)?<code 339> (__IC2Interrupt):<code 339> (__DefaultInterrupt)
                   0x000120          0x4 LONG 0x13dbe DEFINED (__AltOC2Interrupt)?<code 339> (__AltOC2Interrupt):DEFINED (__OC2Interrupt)?<code 339> (__OC2Interrupt):<code 339> (__DefaultInterrupt)
@@ -4019,7 +4019,7 @@ my_heap             0x569c        0x500
 .dinit            0x00f7a8        0x744
  .dinit           0x00f7a8        0x744 data_init
 
-.text             0x00feec       0x592a
+.text             0x00feec       0x5932
  .text            0x00feec        0x6a0 SPIFlash.o
                   0x00feec                  SPIFlashInit
                   0x01000a                  SPIFlashReadArray
@@ -4183,77 +4183,77 @@ my_heap             0x569c        0x500
                   0x0148e0                  vPortEnterCritical
                   0x0148f4                  vPortExitCritical
                   0x01490e                  _T5Interrupt
- .text            0x01493c        0x138 init_http_profiles.o
+ .text            0x01493c        0x140 init_http_profiles.o
                   0x01493c                  init_http_profiles
- .text            0x014a74        0x12e Tick.o
-                  0x014a74                  TickInit
-                  0x014af8                  TickGet
-                  0x014b04                  TickGetDiv256
-                  0x014b34                  TickGetDiv64K
-                  0x014b64                  TickConvertToMilliseconds
-                  0x014b8a                  _T1Interrupt
- .text            0x014ba2        0x12c list.o
-                  0x014ba2                  vListInitialise
-                  0x014bd4                  vListInitialiseItem
-                  0x014be2                  vListInsertEnd
-                  0x014c26                  vListInsert
-                  0x014c86                  uxListRemove
- .text            0x014cce        0x128 HWInit.o
-                  0x014cce                  HWInit
- .text            0x014df6        0x110 Delay.o
-                  0x014df6                  DelayMs
-                  0x014e22                  Delay10us
- .text            0x014f06         0xea init_apn_profiles.o
-                  0x014f06                  init_apn_profiles
- .text            0x014ff0         0xde send_http_request.o
-                  0x014ff0                  send_http_request
- .text            0x0150ce         0xaa get_http_state_name.o
-                  0x0150ce                  get_http_state_name
- .text            0x015178         0x98 x_i2c_devices-pro.o
-                  0x015178                  set_register
-                  0x0151d4                  read_register
- .text            0x015210         0x94 wait_until_registered.o
-                  0x015210                  wait_until_registered
- .text            0x0152a4         0x8c process_measurements.o
-                  0x0152a4                  process_measurements
- .text            0x015330         0x88 wait_check_network_connection.o
-                  0x015330                  wait_check_network_connection
- .text            0x0153b8         0x84 x_analog_in-pro.o
-                  0x0153b8                  x_analog_in-pro.o:_An_i_ctor
-                  0x0153ce                  x_analog_in-pro.o:_An_i_dtor
-                  0x0153f4                  x_analog_in-pro.o:_An_i_attach
-                  0x015416                  x_analog_in-pro.o:_An_i_getan_i
- .text            0x01543c         0x70 get_compass_measurement.o
-                  0x01543c                  get_compass_measurement
- .text            0x0154ac         0x54 portasm_PIC24.o
-                  0x0154ac                  vPortYield
- .text            0x015500         0x4a config_compass.o
-                  0x015500                  config_compass
- .text            0x01554a         0x4a init_meas_report.o
-                  0x01554a                  init_meas_report
- .text            0x015594         0x40 read_http_response.o
-                  0x015594                  read_http_response
- .text            0x0155d4         0x38 wait_close_http_socket.o
-                  0x0155d4                  wait_close_http_socket
- .text            0x01560c         0x38 wait_config_apn.o
-                  0x01560c                  wait_config_apn
- .text            0x015644         0x38 wait_open_http_socket.o
-                  0x015644                  wait_open_http_socket
- .text            0x01567c         0x38 wait_read_http_response.o
-                  0x01567c                  wait_read_http_response
- .text            0x0156b4         0x38 wait_send_http_request.o
-                  0x0156b4                  wait_send_http_request
- .text            0x0156ec         0x38 wait_update_http_socket_status.o
-                  0x0156ec                  wait_update_http_socket_status
- .text            0x015724         0x32 config_apn.o
-                  0x015724                  config_apn
- .text            0x015756         0x32 dbgprint_http_state.o
-                  0x015756                  dbgprint_http_state
- .text            0x015788         0x2e send_meas_over_sms.o
-                  0x015788                  send_meas_over_sms
- .text            0x0157b6         0x26 reset_meas_report.o
-                  0x0157b6                  reset_meas_report
- .text            0x0157dc         0x1e dbgprint_rssi.o
-                  0x0157dc                  dbgprint_rssi
- .text            0x0157fa         0x1c process_rssi.o
-                  0x0157fa                  process_rssi
+ .text            0x014a7c        0x12e Tick.o
+                  0x014a7c                  TickInit
+                  0x014b00                  TickGet
+                  0x014b0c                  TickGetDiv256
+                  0x014b3c                  TickGetDiv64K
+                  0x014b6c                  TickConvertToMilliseconds
+                  0x014b92                  _T1Interrupt
+ .text            0x014baa        0x12c list.o
+                  0x014baa                  vListInitialise
+                  0x014bdc                  vListInitialiseItem
+                  0x014bea                  vListInsertEnd
+                  0x014c2e                  vListInsert
+                  0x014c8e                  uxListRemove
+ .text            0x014cd6        0x128 HWInit.o
+                  0x014cd6                  HWInit
+ .text            0x014dfe        0x110 Delay.o
+                  0x014dfe                  DelayMs
+                  0x014e2a                  Delay10us
+ .text            0x014f0e         0xea init_apn_profiles.o
+                  0x014f0e                  init_apn_profiles
+ .text            0x014ff8         0xde send_http_request.o
+                  0x014ff8                  send_http_request
+ .text            0x0150d6         0xaa get_http_state_name.o
+                  0x0150d6                  get_http_state_name
+ .text            0x015180         0x98 x_i2c_devices-pro.o
+                  0x015180                  set_register
+                  0x0151dc                  read_register
+ .text            0x015218         0x94 wait_until_registered.o
+                  0x015218                  wait_until_registered
+ .text            0x0152ac         0x8c process_measurements.o
+                  0x0152ac                  process_measurements
+ .text            0x015338         0x88 wait_check_network_connection.o
+                  0x015338                  wait_check_network_connection
+ .text            0x0153c0         0x84 x_analog_in-pro.o
+                  0x0153c0                  x_analog_in-pro.o:_An_i_ctor
+                  0x0153d6                  x_analog_in-pro.o:_An_i_dtor
+                  0x0153fc                  x_analog_in-pro.o:_An_i_attach
+                  0x01541e                  x_analog_in-pro.o:_An_i_getan_i
+ .text            0x015444         0x70 get_compass_measurement.o
+                  0x015444                  get_compass_measurement
+ .text            0x0154b4         0x54 portasm_PIC24.o
+                  0x0154b4                  vPortYield
+ .text            0x015508         0x4a config_compass.o
+                  0x015508                  config_compass
+ .text            0x015552         0x4a init_meas_report.o
+                  0x015552                  init_meas_report
+ .text            0x01559c         0x40 read_http_response.o
+                  0x01559c                  read_http_response
+ .text            0x0155dc         0x38 wait_close_http_socket.o
+                  0x0155dc                  wait_close_http_socket
+ .text            0x015614         0x38 wait_config_apn.o
+                  0x015614                  wait_config_apn
+ .text            0x01564c         0x38 wait_open_http_socket.o
+                  0x01564c                  wait_open_http_socket
+ .text            0x015684         0x38 wait_read_http_response.o
+                  0x015684                  wait_read_http_response
+ .text            0x0156bc         0x38 wait_send_http_request.o
+                  0x0156bc                  wait_send_http_request
+ .text            0x0156f4         0x38 wait_update_http_socket_status.o
+                  0x0156f4                  wait_update_http_socket_status
+ .text            0x01572c         0x32 config_apn.o
+                  0x01572c                  config_apn
+ .text            0x01575e         0x32 dbgprint_http_state.o
+                  0x01575e                  dbgprint_http_state
+ .text            0x015790         0x2e send_meas_over_sms.o
+                  0x015790                  send_meas_over_sms
+ .text            0x0157be         0x26 reset_meas_report.o
+                  0x0157be                  reset_meas_report
+ .text            0x0157e4         0x1e dbgprint_rssi.o
+                  0x0157e4                  dbgprint_rssi
+ .text            0x015802         0x1c process_rssi.o
+                  0x015802                  process_rssi

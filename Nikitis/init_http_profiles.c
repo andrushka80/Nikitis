@@ -26,7 +26,7 @@ void init_http_profiles(HTTP_PARAMS_T* httpProfilesPtr)
 	strcpy(httpProfilesPtr[VICOSH_RO].requestURL,"/");
 	strcpy(httpProfilesPtr[VICOSH_RO].apikey, "");
 	strcpy(httpProfilesPtr[VICOSH_RO].devId, DEVICE_ID);
-	strcpy(httpProfilesPtr[CARRIOTS].postHeader, "");
+	strcpy(httpProfilesPtr[VICOSH_RO].postHeader, "");
 	httpProfilesPtr[VICOSH_RO].sockHttp = NULL;
 
 	strcpy(httpProfilesPtr[GOOGLE_COM].httpServName, "www.google.com");
@@ -35,6 +35,6 @@ void init_http_profiles(HTTP_PARAMS_T* httpProfilesPtr)
 	strcpy(httpProfilesPtr[GOOGLE_COM].requestURL, "/");
 	strcpy(httpProfilesPtr[GOOGLE_COM].apikey, "");
 	strcpy(httpProfilesPtr[GOOGLE_COM].devId, DEVICE_ID);
-	strcpy(httpProfilesPtr[CARRIOTS].postHeader, "");
+	strcpy(httpProfilesPtr[GOOGLE_COM].postHeader, "");
 	httpProfilesPtr[GOOGLE_COM].sockHttp = NULL;
 }
