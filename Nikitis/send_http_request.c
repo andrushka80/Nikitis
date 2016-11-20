@@ -29,11 +29,6 @@ void send_http_request(HTTP_PARAMS_T *httpParams, HTTP_REQ_T requestType, char* 
 			
 			// Fill additional params:
 			sprintf(paramsHttp, httpParams->postHeader, httpParams->apikey, strlen(jsonReport));
-			
-			_dbgwrite("Request URL: ");_dbgwrite(httpParams->requestURL);_dbgwrite("\n");
-			_dbgwrite("JSON: ");_dbgwrite(jsonReport);_dbgwrite("\n");
-			_dbgwrite("Header format: ");_dbgwrite(httpParams->postHeader);_dbgwrite("\n");
-			_dbgwrite("HTTP Parameters: ");_dbgwrite(paramsHttp);_dbgwrite("\n");
 
 			// Launch the request
 			HTTPRequest(httpParams->sockHttp, HTTP_POST, httpParams->requestURL, jsonReport, paramsHttp);
