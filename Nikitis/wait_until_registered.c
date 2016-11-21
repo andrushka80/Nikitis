@@ -25,11 +25,13 @@ void wait_until_registered(MEAS_REPORT_T* measReport)
 	
 	vTaskDelay(DELAY_200MSEC);
 	IOPut(LED1_Pin, on);
-
 	
 	sprintf(measReport->operatorName, "%s", GSMGetOperatorName());
 	sprintf(measReport->imeiNumber, "%s", GSMGetIMEI());
 
+	if (measReport->operatorName[0] == '\0'){
+		sprintf(measReport->operatorName, "\"%d\"", APN_PROFILE);
+	}
 	
 	#ifdef DEBUG_PRINT_LEVEL0
 	_dbgwrite("Flyport registered on network!\r\n");
