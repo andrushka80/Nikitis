@@ -16,7 +16,7 @@ void init_http_profiles(HTTP_PARAMS_T* httpProfilesPtr)
 	strcpy(httpProfilesPtr[CARRIOTS].requestGetURL, "/");
 	strcpy(httpProfilesPtr[CARRIOTS].requestURL, "api.carriots.com/streams");
 	strcpy(httpProfilesPtr[CARRIOTS].apikey, "76b81a858602a65c55325b29ad2c43b31d15c51ef3963caa594e24ff804a59f6");
-	strcpy(httpProfilesPtr[CARRIOTS].devId, DEVICE_ID);
+	sprintf(httpProfilesPtr[CARRIOTS].devId, "%s@EOS_Carriots_test.EOS_Carriots_test", DEVICE_ID);
 	strcpy(httpProfilesPtr[CARRIOTS].postHeader, "Accept: */*\r\ncarriots.apikey:%s\r\nContent-Length: %d\r\nContent-Type: application/x-www-form-urlencoded");
 	httpProfilesPtr[CARRIOTS].sockHttp = NULL;
 	

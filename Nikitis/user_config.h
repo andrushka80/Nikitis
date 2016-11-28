@@ -7,7 +7,7 @@
 //#define		DEBUG_PRINT_LEVEL2 //measurements
 //#define		DEBUG_PRINT_AT_CMD
 
-#define		DEVICE_ID				"Sensor_01@EOS_Carriots_test.EOS_Carriots_test"
+#define		DEVICE_ID				"0000001"
 
 #define		PHONE_NUMBER			"0040722745715"
 
