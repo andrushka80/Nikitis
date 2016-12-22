@@ -7,6 +7,9 @@
 //#define		DEBUG_PRINT_LEVEL2 //measurements
 //#define		DEBUG_PRINT_AT_CMD
 
+#define 	CONFIG_SD_FILE		"Config.txt"
+#define 	DEBUG_SD_DIR		"Debug"
+
 #define		DEVICE_ID				"0000000001"
 
 #define		PHONE_NUMBER			"0040722745715"

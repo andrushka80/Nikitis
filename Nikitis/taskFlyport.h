@@ -44,8 +44,9 @@
 #define		MAX_APIKEY_LEN              100
 #define     MAX_CARRIOTS_DEV_ID         64
 #define		MAX_POST_HEADER_LEN			150
+#define		MAX_CONFIG_FILE_SIZE		100
 
-#define		MAX_DEVICE_ID_LENGTH		64
+#define		DEVICE_ID_LENGTH			10
 
 #define		MIN_RSSI					-113
 #define		MAX_RSSI					-51
@@ -116,12 +117,19 @@ typedef struct {
 } APN_PARAMS_T;
 
 typedef struct {
+   char  		deviceId[DEVICE_ID_LENGTH];
+   int  		apnProfile;
+   int  		httpServerProfile;
+} CFG_PARAMS_T;
+
+
+typedef struct {
    int  		numDetections;
    int			numDetectedCars;
    int			minRssi;
    int			maxRssi;
    int			batteryLevel;
-   char			deviceId[MAX_DEVICE_ID_LENGTH];
+   char			deviceId[DEVICE_ID_LENGTH];
    char			operatorName[MAX_OPERATOR_NAME_LEN];
    char			imeiNumber[MAX_IMEI_LEN];
 } MEAS_REPORT_T;
@@ -169,5 +177,6 @@ void	dbgprint_rssi(void);
 
 void 	init_apn_profiles(APN_PARAMS_T* apnProfiles);
 void	config_apn(APN_PARAMS_T*);
+void 	read_cfg_data(CFG_PARAMS_T* cfgParams);
 
 //#endif

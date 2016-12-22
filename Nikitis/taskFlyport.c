@@ -4,12 +4,20 @@
 #include "3axiscompass.h"
 #include "user_config.h"
 #include "Hilo.h"
+#include "sd_manager.h"
 
 #define USE_AND_OR
 #include "timer.h"
 
 char		jsonReport[MAX_JSON_PAYLOAD_LENGTH];
 char		inBuff[MAX_INBUFF_LENGTH];
+
+void	check_if_sd_present();
+
+BOOL 	repeatInit = TRUE;
+BOOL 	initRes = FALSE;
+BOOL 	resultSD = FALSE;
+int 	sdError = 0;
 
 APN_PARAMS_T	apnProfiles[3];
 HTTP_PARAMS_T	httpProfiles[3];
@@ -36,6 +44,7 @@ void FlyportTask()
 	#ifdef DEBUG_PRINT_LEVEL1
 	char dbgMsg[100];
 	#endif
+
 	
 	HTTP_PARAMS_T	*httpParams = NULL;
 	httpParams = malloc(sizeof(HTTP_PARAMS_T));
@@ -45,11 +54,35 @@ void FlyportTask()
 
 	MEAS_REPORT_T	*measReport = NULL;
 	measReport = malloc(sizeof(MEAS_REPORT_T));
+	
+	CFG_PARAMS_T	*cfgParams = NULL;
+	cfgParams = malloc(sizeof(CFG_PARAMS_T));
+
 
 /////////////////////////////////
+
+	// Disable all Analog channels
+	int i;
+	for(i = 0; i < 9; i++)
+		ADCDetach(i);
+	ADCAttach(2);	// Enable only Analog 2 channel (pin p5)
+	
+	// Enable onboard LEDs output
+	IOInit(p31, out);
+	IOInit(p32, out);
+	IOPut(p32, off);
+	IOPut(p31, off);
+	
+	// Enable switches with internal pullup resistors)
+	IOInit(p9, inup);	// SW1
+	IOInit(p11, inup);	// SW2
 	
 	vTaskDelay(DELAY_1SEC);
+	check_if_sd_present();
 	
+	
+ 
+	vTaskDelay(DELAY_1SEC);
 	init_meas_report(measReport);
 	
 	#ifdef SEND_HTTP_IS_ENABLED
@@ -57,6 +90,10 @@ void FlyportTask()
 	
 	init_http_profiles(httpProfiles);
 	init_apn_profiles(apnProfiles);
+	read_cfg_data(cfgParams);
+	
+	SDDirCreate(DEBUG_SD_DIR);
+	SDDirChange(DEBUG_SD_DIR);
 	
 	apnParams = &apnProfiles[APN_PROFILE];
 	
@@ -80,6 +117,8 @@ void FlyportTask()
 	wait_until_registered(measReport);
 	
 	vTaskDelay(DELAY_1SEC);
+ 
+
  
 	#ifdef SENSOR_IS_ATTACHED
 	compass = config_compass(board);
@@ -337,4 +376,54 @@ void run_http_state_machine(APN_PARAMS_T  * apnParams, HTTP_PARAMS_T * httpParam
 				break;
 		}
 		
+}
+
+void check_if_sd_present()
+{
+    // Check for SD-Card detect signal
+    if(IOGet(p11) == TRUE)
+    {
+        if(repeatInit == FALSE)
+        {
+            _dbgwrite("SDUnMount()...\n");
+            resultSD = SDUnMount();
+            repeatInit = TRUE;
+        }   
+		else
+		{
+			_dbgwrite("We are here\n");
+		}
+			
+    }
+    else
+    {
+        if(repeatInit == TRUE)
+        {
+            _dbgwrite("SDInit()...");
+ 
+            // Init uSD Card on Eval Board
+			// SDInit(int pin_sck, int pin_si, int pin_so, int pin_cs, int pin_cd, BYTE timeout);
+			initRes = SDInit(p7, p3, p1, p5, p11, 15);
+	
+ 
+            if (initRes)
+            {
+                repeatInit = FALSE;
+                _dbgwrite("Initialized\n");
+            }
+            else
+            {
+                sdError = SDGetErr();
+                if (sdError == SD_NOT_PRESENT)
+                {
+                    _dbgwrite("SD Card Not Present\n");
+                }   
+                else if (sdError == SD_FS_NOT_INIT)
+                {
+                    _dbgwrite("Generic error\n");
+                    while (1); // Lock here for generic error!
+                }   
+            }   
+        }
+	}
 }
