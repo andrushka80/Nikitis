@@ -88,16 +88,16 @@ void FlyportTask()
 	#ifdef SEND_HTTP_IS_ENABLED
 	httpParams->sockHttp = &sockHttp;
 	
-	init_http_profiles(httpProfiles);
-	init_apn_profiles(apnProfiles);
 	read_cfg_data(cfgParams);
+	init_http_profiles(httpProfiles, cfgParams);
+	init_apn_profiles(apnProfiles);
 	
 	SDDirCreate(DEBUG_SD_DIR);
 	SDDirChange(DEBUG_SD_DIR);
 	
-	apnParams = &apnProfiles[APN_PROFILE];
+	apnParams = &apnProfiles[cfgParams->apnProfile];
 	
-	httpParams = &httpProfiles[HTTP_SERVER_PROFILE];
+	httpParams = &httpProfiles[cfgParams->httpServerProfile];
 	httpParams->sockHttp = &sockHttp;
 	httpParams->sockHttp->number = INVALID_SOCKET;
 	

@@ -117,7 +117,7 @@ typedef struct {
 } APN_PARAMS_T;
 
 typedef struct {
-   char  		deviceId[DEVICE_ID_LENGTH];
+   char  		deviceId[DEVICE_ID_LENGTH+1]; // TO BE SET BACK TO deviceId[DEVICE_ID_LENGTH]
    int  		apnProfile;
    int  		httpServerProfile;
 } CFG_PARAMS_T;
@@ -129,7 +129,7 @@ typedef struct {
    int			minRssi;
    int			maxRssi;
    int			batteryLevel;
-   char			deviceId[DEVICE_ID_LENGTH];
+   char			deviceId[DEVICE_ID_LENGTH+1];  // TO BE SET BACK TO deviceId[DEVICE_ID_LENGTH]
    char			operatorName[MAX_OPERATOR_NAME_LEN];
    char			imeiNumber[MAX_IMEI_LEN];
 } MEAS_REPORT_T;
@@ -168,7 +168,7 @@ void read_http_response(HTTP_PARAMS_T*, char*);
 void send_http_request(HTTP_PARAMS_T*, HTTP_REQ_T, char*);
 
 void dbgprint_http_state(int, int);
-void init_http_profiles(HTTP_PARAMS_T* httpProfiles);
+void init_http_profiles(HTTP_PARAMS_T* httpProfilesPtr, CFG_PARAMS_T* cfgParams);
 char* get_http_state_name(int);
 void run_http_state_machine(APN_PARAMS_T  * apnParams, HTTP_PARAMS_T * httpParams);
 

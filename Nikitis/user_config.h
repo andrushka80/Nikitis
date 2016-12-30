@@ -10,15 +10,15 @@
 #define 	CONFIG_SD_FILE		"Config.txt"
 #define 	DEBUG_SD_DIR		"Debug"
 
-#define		DEVICE_ID				"0000000001"
+#define		DEVICE_ID				"0000000001" //!! This is the default DEVICE_ID value to be set in case SD is not present
 
 #define		PHONE_NUMBER			"0040722745715"
 
 //0 - VODAFONE RO, 1 - ORANGE RO, 2 - TELEKOM RO
-#define			APN_PROFILE				1
+#define			APN_PROFILE				0        //!! This is the default APN_PROFILE value to be set in case SD is not present
 
 //0 - CARRIOTS, 1 - VICOSH.RO, 2 - GOOGLE
-#define		HTTP_SERVER_PROFILE			0
+#define		HTTP_SERVER_PROFILE			0        //!! This is the default HTTP_SERVER_PROFILE value to be set in case SD is not present
 
 //#define		SEND_SMS_IS_ENABLED
 #define		SEND_HTTP_IS_ENABLED
