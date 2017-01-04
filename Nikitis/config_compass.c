@@ -5,6 +5,7 @@
 #include "oled.h"
 #include "3axiscompass.h"
 #include "user_config.h"
+#include "debug_report_tools.h"
 
 void* config_compass(void *board){
 
@@ -15,10 +16,10 @@ void* config_compass(void *board){
 	attachToBoard(board, compass, I2C);
 	
 	if(!configure(compass)){
-		_dbgwrite("3 axis Compass initialized properly\n\r");
+		DBG_WRITE("3 axis Compass initialized properly\n\r", DBG_UART);
 	}
 	else{
-		_dbgwrite("ERROR!3 axis Compass not initialized!!\n\r");
+		DBG_WRITE("ERROR!3 axis Compass not initialized!!\n\r", DBG_UART);
 	}
 	
 	return compass;

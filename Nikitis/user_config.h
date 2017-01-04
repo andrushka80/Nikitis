@@ -4,11 +4,12 @@
 //Debug printing 
 #define 	DEBUG_PRINT_LEVEL0 //errors
 #define 	DEBUG_PRINT_LEVEL1 //states
-//#define		DEBUG_PRINT_LEVEL2 //measurements
+#define		DEBUG_PRINT_LEVEL2 //measurements
 //#define		DEBUG_PRINT_AT_CMD
 
 #define 	CONFIG_SD_FILE		"Config.txt"
 #define 	DEBUG_SD_DIR		"Debug"
+#define 	DEBUG_SD_FNAME		"Debug.txt"
 
 #define		DEVICE_ID				"0000000001" //!! This is the default DEVICE_ID value to be set in case SD is not present
 

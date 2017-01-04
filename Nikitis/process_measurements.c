@@ -1,6 +1,7 @@
 // Processes raw measurements	
 #include "taskFlyport.h"
 #include "user_config.h"
+#include "debug_report_tools.h"
  
 void process_measurements(MEAS_REPORT_T*  measReport, float measBx, float measBy, float measBz)
 { 
@@ -17,7 +18,7 @@ void process_measurements(MEAS_REPORT_T*  measReport, float measBx, float measBy
 	if (carIsDetected)
 	{
 		#ifdef DEBUG_PRINT_LEVEL0
-		_dbgwrite("Detection\n");
+		DBG_WRITE("Detection\r\n", DBG_UART_SD_TS);
 		#endif
 		
 		measReport->numDetections++;

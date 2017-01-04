@@ -9,8 +9,11 @@
 #define USE_AND_OR
 #include "timer.h"
 
+#include "debug_report_tools.h"
+
 char		jsonReport[MAX_JSON_PAYLOAD_LENGTH];
 char		inBuff[MAX_INBUFF_LENGTH];
+char        test_file_write[64];
 
 void	check_if_sd_present();
 
@@ -79,21 +82,25 @@ void FlyportTask()
 	
 	vTaskDelay(DELAY_1SEC);
 	check_if_sd_present();
-	
-	
- 
 	vTaskDelay(DELAY_1SEC);
-	init_meas_report(measReport);
 	
 	#ifdef SEND_HTTP_IS_ENABLED
 	httpParams->sockHttp = &sockHttp;
 	
+	// read config data
 	read_cfg_data(cfgParams);
+	
+	// init HTTP profiles
 	init_http_profiles(httpProfiles, cfgParams);
+	
+	// init APN profiles
 	init_apn_profiles(apnProfiles);
 	
-	SDDirCreate(DEBUG_SD_DIR);
-	SDDirChange(DEBUG_SD_DIR);
+	// init MEASUREMENTS report
+	init_meas_report(measReport, cfgParams);
+	
+	// init DEBUG on SD card
+	init_dbg_sd();
 	
 	apnParams = &apnProfiles[cfgParams->apnProfile];
 	
@@ -125,7 +132,7 @@ void FlyportTask()
 	#endif
 	
 	#ifdef DEBUG_PRINT_LEVEL0
-	_dbgwrite("Starting measurement...\n");
+	DBG_WRITE("Starting measurement...\n", DBG_UART);
 	#endif
 	
 	tick = TickGetDiv64K();
@@ -162,7 +169,7 @@ void FlyportTask()
 			vTaskDelay(DELAY_200MSEC);
 			#endif
 			
-			_dbgwrite(jsonReport);
+			DBG_WRITE(jsonReport, DBG_UART);
 			
 		}
 
@@ -344,7 +351,7 @@ void run_http_state_machine(APN_PARAMS_T  * apnParams, HTTP_PARAMS_T * httpParam
 				httpNextState = HTTP_IDLE;
 				httpPrevState = HTTP_SESSION_END;
 				
-				_dbgwrite(inBuff);
+				DBG_WRITE(inBuff, DBG_UART);
 				
 				break;
 				
@@ -385,13 +392,13 @@ void check_if_sd_present()
     {
         if(repeatInit == FALSE)
         {
-            _dbgwrite("SDUnMount()...\n");
+            DBG_WRITE("SDUnMount()...\n", DBG_UART);
             resultSD = SDUnMount();
             repeatInit = TRUE;
         }   
 		else
 		{
-			_dbgwrite("We are here\n");
+			DBG_WRITE("We are here\n", DBG_UART);
 		}
 			
     }
@@ -399,7 +406,7 @@ void check_if_sd_present()
     {
         if(repeatInit == TRUE)
         {
-            _dbgwrite("SDInit()...");
+            DBG_WRITE("SDInit()...", DBG_UART);
  
             // Init uSD Card on Eval Board
 			// SDInit(int pin_sck, int pin_si, int pin_so, int pin_cs, int pin_cd, BYTE timeout);
@@ -409,18 +416,18 @@ void check_if_sd_present()
             if (initRes)
             {
                 repeatInit = FALSE;
-                _dbgwrite("Initialized\n");
+                DBG_WRITE("Initialized\n", DBG_UART);
             }
             else
             {
                 sdError = SDGetErr();
                 if (sdError == SD_NOT_PRESENT)
                 {
-                    _dbgwrite("SD Card Not Present\n");
+                    DBG_WRITE("SD Card Not Present\n", DBG_UART);
                 }   
                 else if (sdError == SD_FS_NOT_INIT)
                 {
-                    _dbgwrite("Generic error\n");
+                    DBG_WRITE("Generic error\n", DBG_UART);
                     while (1); // Lock here for generic error!
                 }   
             }   

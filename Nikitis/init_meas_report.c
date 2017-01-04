@@ -1,7 +1,7 @@
 #include "taskFlyport.h"
 #include "user_config.h"
  
-void init_meas_report(MEAS_REPORT_T* measReport)
+void init_meas_report(MEAS_REPORT_T* measReport, CFG_PARAMS_T* cfgParams)
 { 
 
 	measReport->numDetections 	= 0;
@@ -9,7 +9,7 @@ void init_meas_report(MEAS_REPORT_T* measReport)
 	measReport->minRssi = MIN_RSSI;
 	measReport->maxRssi = 0;
 
-	strcpy(measReport->deviceId,DEVICE_ID);
+	strcpy(measReport->deviceId,cfgParams->deviceId);
 
 	strcpy(measReport->operatorName, "UNKNOWN");
 		

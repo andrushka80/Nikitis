@@ -151,7 +151,7 @@ float 	get_compass_measurement(void* compass, char axis);
 void 	send_meas_over_sms(void);
 void 	process_measurements(MEAS_REPORT_T*, float, float, float);
 void 	process_rssi(MEAS_REPORT_T*);
-void 	init_meas_report(MEAS_REPORT_T*);
+void 	init_meas_report(MEAS_REPORT_T* measReport, CFG_PARAMS_T* cfgParams);
 void 	reset_meas_report(MEAS_REPORT_T*);
 int 	build_json_report(char*, MEAS_REPORT_T*, HTTP_PARAMS_T* httpParams);
 

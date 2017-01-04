@@ -1,13 +1,14 @@
 // Wait for GSM Connection successful	
 #include "taskFlyport.h"
 #include "user_config.h"
+#include "debug_report_tools.h"
 
 void send_http_request(HTTP_PARAMS_T *httpParams, HTTP_REQ_T requestType, char* jsonReport){ 
 
 	char data[MAX_HTTP_HEADER_LEN];
 	static char paramsHttp[MAX_HTTP_HEADER_LEN];
 	
-	_dbgwrite("Sending request to server...\r\n");
+	DBG_WRITE("Sending request to server...\r\n", DBG_UART);
 
 	// Choose the type of request:
 	switch(requestType)
