@@ -147,7 +147,7 @@ void FlyportTask();
 
 void 	wait_until_registered(MEAS_REPORT_T*);
 void* 	config_compass(void* board);
-float 	get_compass_measurement(void* compass, char axis);
+float 	get_compass_measurement(void* compass, char axis, BOOL log_meas);
 void 	send_meas_over_sms(void);
 void 	process_measurements(MEAS_REPORT_T*, float, float, float);
 void 	process_rssi(MEAS_REPORT_T*);

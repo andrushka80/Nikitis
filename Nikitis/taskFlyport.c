@@ -13,7 +13,6 @@
 
 char		jsonReport[MAX_JSON_PAYLOAD_LENGTH];
 char		inBuff[MAX_INBUFF_LENGTH];
-char        test_file_write[64];
 
 void	check_if_sd_present();
 
@@ -21,6 +20,10 @@ BOOL 	repeatInit = TRUE;
 BOOL 	initRes = FALSE;
 BOOL 	resultSD = FALSE;
 int 	sdError = 0;
+
+#ifdef SENSOR_IS_ATTACHED
+int     compass_dbg_count = 0;
+#endif
 
 APN_PARAMS_T	apnProfiles[3];
 HTTP_PARAMS_T	httpProfiles[3];
@@ -44,9 +47,7 @@ void FlyportTask()
 
 	int				jsonReportLength;
 	
-	#ifdef DEBUG_PRINT_LEVEL1
 	char dbgMsg[100];
-	#endif
 
 	
 	HTTP_PARAMS_T	*httpParams = NULL;
@@ -141,9 +142,20 @@ void FlyportTask()
 	{
 		
 		#ifdef SENSOR_IS_ATTACHED
-		measBx = get_compass_measurement(compass, AXIS_X);
-		measBy = get_compass_measurement(compass, AXIS_Y);
-		measBz = get_compass_measurement(compass, AXIS_Z);
+		if (compass_dbg_count == (DEBUG_COMPASS_MEAS_PERIOD-1))
+		{
+			compass_dbg_count = 0;
+			measBx = get_compass_measurement(compass, AXIS_X, 1);
+			measBy = get_compass_measurement(compass, AXIS_Y, 1);
+			measBz = get_compass_measurement(compass, AXIS_Z, 1);
+		}
+		else
+		{
+			compass_dbg_count++;
+			measBx = get_compass_measurement(compass, AXIS_X, 0);
+			measBy = get_compass_measurement(compass, AXIS_Y, 0);
+			measBz = get_compass_measurement(compass, AXIS_Z, 0);
+		}
 		#endif
 		
 		vTaskDelay(DELAY_200MSEC);
@@ -158,6 +170,9 @@ void FlyportTask()
 		
 		if (timeToSendReport)
 		{
+			sprintf(dbgMsg,"Sending the measurements report. It contains %d detections.\r\n",measReport->numDetections);
+			DBG_WRITE(dbgMsg, DBG_UART_SD_TS);
+			
 			sendHttpMsg = TRUE;
 			process_rssi(measReport);
 			jsonReportLength = build_json_report(jsonReport, measReport, httpParams);

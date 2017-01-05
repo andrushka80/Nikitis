@@ -11,8 +11,11 @@ void init_dbg_sd()
 {
 	SDDirCreate(DEBUG_SD_DIR);
 	SDDirChange(DEBUG_SD_DIR);
-	SDFileCreate(DEBUG_SD_FNAME);
-	sprintf(txtmsg,"Debug session initiated\r\n");
+	if (!SDFileCheck(DEBUG_SD_FNAME))
+	{
+		SDFileCreate(DEBUG_SD_FNAME);
+	}
+	sprintf(txtmsg,"Debug session initiated\r\n************************************************************************\r\n");
 	SDFileAppend(DEBUG_SD_FNAME, txtmsg, strlen(txtmsg));
 	dbg_sd_configured = 1;
 }

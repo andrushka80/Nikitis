@@ -5,6 +5,7 @@
 #define 	DEBUG_PRINT_LEVEL0 //errors
 #define 	DEBUG_PRINT_LEVEL1 //states
 #define		DEBUG_PRINT_LEVEL2 //measurements
+#define     DEBUG_COMPASS_MEAS_PERIOD   1   // log the compass measurements at every DEBUG_COMPASS_MEAS_PERIOD cycles
 //#define		DEBUG_PRINT_AT_CMD
 
 #define 	CONFIG_SD_FILE		"Config.txt"
