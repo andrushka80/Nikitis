@@ -126,8 +126,6 @@ void FlyportTask()
 	
 	vTaskDelay(DELAY_1SEC);
  
-
- 
 	#ifdef SENSOR_IS_ATTACHED
 	compass = config_compass(board);
 	#endif
@@ -158,27 +156,28 @@ void FlyportTask()
 		}
 		#endif
 		
-		vTaskDelay(DELAY_200MSEC);
+		//vTaskDelay(DELAY_200MSEC);
 		
 		#ifdef SENSOR_IS_ATTACHED
 		process_measurements(measReport, measBx, measBy, measBz);
+		if (httpNextState == HTTP_IDLE)
+			process_rssi(measReport);
 		#endif
 		
 		tock = TickGetDiv64K();
 		
 		timeToSendReport = (tock - tick >= SERVER_REPORT_PERIOD);
 		
-		if (timeToSendReport)
+		if ((timeToSendReport) && (httpNextState == HTTP_IDLE))
 		{
-			sprintf(dbgMsg,"Sending the measurements report. It contains %d detections.\r\n",measReport->numDetections);
+			sprintf(dbgMsg,"Sending the measurements report. It contains %d detections and covers %d RSSI measurements.\r\n",measReport->numDetections,get_num_RSSI_checks());
 			DBG_WRITE(dbgMsg, DBG_UART_SD_TS);
 			
 			sendHttpMsg = TRUE;
-			process_rssi(measReport);
 			jsonReportLength = build_json_report(jsonReport, measReport, httpParams);
 			reset_meas_report(measReport);//Need to restart measurement cycle
 			tick = tock;
-			
+
 			#ifdef SEND_SMS_IS_ENABLED
 			send_meas_over_sms();
 			vTaskDelay(DELAY_200MSEC);

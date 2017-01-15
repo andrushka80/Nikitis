@@ -70,6 +70,8 @@ extern BYTE LastConnStatus();
 extern int	LastExecStat();
 extern int  LastErrorCode();
 extern int  LastSignalRssi();
+extern int  CheckRSSIAvailable();
+extern void ResetRSSIAvailable();
 
 char* GSMGetIMEI();
 char* GSMGetOperatorName();

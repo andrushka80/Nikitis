@@ -24,16 +24,6 @@ void process_measurements(MEAS_REPORT_T*  measReport, float measBx, float measBy
 		measReport->numDetections++;
 
 	}
-	
-	//currRssi = LastSignalRssi();
-	//if (currRssi < measReport->minRssi)
-	//{
-	//	measReport->minRssi = currRssi;
-	//}
-	//
-	//if (currRssi > measReport->maxRssi)
-	//{
-	//	measReport->maxRssi = currRssi;
-	//}
-
 }
+
+

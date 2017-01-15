@@ -68,6 +68,7 @@ extern int mainGSMStateMachine;
 extern OpStat	mainOpStatus;
 extern GSMModule mainGSM;
 extern int signal_dBm_Gsm;
+extern int rssi_available;
 extern int rxQualGsm;
 
 extern int CheckCmd(int countData, int chars2read, const DWORD tick, char* cmdReply, const char* msg2send, const BYTE maxtimeout);
@@ -1151,6 +1152,7 @@ int cGSMSignalQualityUpdate(void)
                         signal_dBm_Gsm = 0;
                     else
                         signal_dBm_Gsm = (-113)+(2*readVal);
+					rssi_available = 1;
                 }
                 // Get <ber> (not used yet in FlyportGPRS framework...
                 res = getfield(',', '\n', 30,1, cmdReply, temp, 500);

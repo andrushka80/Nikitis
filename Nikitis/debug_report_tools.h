@@ -12,10 +12,11 @@
 typedef enum 
 {
 	DBG_UART           = 0,     // Print dbg info on UART
-	DBG_SD             = 1,     // Write dbg info on SD
-	DBG_SD_TS          = 2,     // Write dbg info on SD and add timestamp
-	DBG_UART_SD        = 3,     // Write dbg info on UART and on SD
-	DBG_UART_SD_TS     = 4      // Write dbg info on SD and on UART and add timestamp
+	DBG_UART_TS        = 1,
+	DBG_SD             = 2,     // Write dbg info on SD
+	DBG_SD_TS          = 3,     // Write dbg info on SD and add timestamp
+	DBG_UART_SD        = 4,     // Write dbg info on UART and on SD
+	DBG_UART_SD_TS     = 5      // Write dbg info on SD and on UART and add timestamp
 } DBG_TARGET_T;
 
 // *****************************************

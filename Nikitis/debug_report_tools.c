@@ -29,6 +29,16 @@ void DBG_WRITE(char* dbgstr, DBG_TARGET_T mode)
 			_dbgwrite(dbgstr);
 			break;
 		
+		case DBG_UART_TS :
+			// get Timer value
+			timer_val = TickGet();
+			//timer_val = TickGetDiv64K();
+			sprintf(txtmsg, "%ld - %s", timer_val, dbgstr);
+			
+			// print on UART
+			_dbgwrite(txtmsg);
+			break;
+		
 		case DBG_SD :
 			// write on SD
 			if (dbg_sd_configured)

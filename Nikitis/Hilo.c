@@ -104,6 +104,7 @@ GSMModule 		mainGSM;
 CALLData		mainCall;
 static int		errorCode;
 int             signal_dBm_Gsm = 0;
+int             rssi_available = 0;
 int				rxQualGsm = -1;
 
 SMSData			mainSMS;
@@ -169,6 +170,16 @@ int LastErrorCode()
 int LastSignalRssi()
 {
     return signal_dBm_Gsm;
+}
+
+int CheckRSSIAvailable()
+{
+	return rssi_available;
+}
+
+void ResetRSSIAvailable()
+{
+	rssi_available = 0;
 }
 
 void callbackDbg(BYTE smInt)
