@@ -19,7 +19,10 @@ void	check_if_sd_present();
 BOOL 	repeatInit = TRUE;
 BOOL 	initRes = FALSE;
 BOOL 	resultSD = FALSE;
+BOOL    reset_modem = FALSE;
+int     report_count = 0;
 int 	sdError = 0;
+int     rssi_decimation = RSSI_DECIMATION_STEP;
 
 #ifdef SENSOR_IS_ATTACHED
 int     compass_dbg_count = 0;
@@ -138,6 +141,25 @@ void FlyportTask()
 	
 	while(1)
 	{
+		if (reset_modem)
+		{
+			reset_modem = 0;
+			sprintf(dbgMsg,"DBG: Resetting the modem. Pause 20 sec...\r\n");
+			DBG_WRITE(dbgMsg, DBG_UART_SD);
+			vTaskDelay(DELAY_1MIN);
+			sprintf(dbgMsg,"DBG: Configuring APN...\r\n");
+			DBG_WRITE(dbgMsg, DBG_UART_SD);
+			config_apn(apnParams);
+			while (LastExecStat() == OP_EXECUTION)
+			{
+				apnSuccess = wait_config_apn();
+			}
+			sprintf(dbgMsg,"DBG: APN Configured. Wait until registered...\r\n");
+			DBG_WRITE(dbgMsg, DBG_UART_SD);
+			wait_until_registered(measReport);
+			sprintf(dbgMsg,"DBG: Registered!\r\n");
+			DBG_WRITE(dbgMsg, DBG_UART_SD);
+		}
 		
 		#ifdef SENSOR_IS_ATTACHED
 		if (compass_dbg_count == (DEBUG_COMPASS_MEAS_PERIOD-1))
@@ -161,7 +183,15 @@ void FlyportTask()
 		#ifdef SENSOR_IS_ATTACHED
 		process_measurements(measReport, measBx, measBy, measBz);
 		if (httpNextState == HTTP_IDLE)
-			process_rssi(measReport);
+		{
+			rssi_decimation--;
+			if (rssi_decimation==0)
+			{
+				rssi_decimation = RSSI_DECIMATION_STEP;
+				//process_rssi(measReport);
+			}
+		}
+			
 		#endif
 		
 		tock = TickGetDiv64K();
@@ -170,21 +200,37 @@ void FlyportTask()
 		
 		if ((timeToSendReport) && (httpNextState == HTTP_IDLE))
 		{
-			sprintf(dbgMsg,"Sending the measurements report. It contains %d detections and covers %d RSSI measurements.\r\n",measReport->numDetections,get_num_RSSI_checks());
+			report_count++; // increment report count
+			
+			sprintf(dbgMsg,"Sending the measurements report #%d. It contains %d detections and covers %d RSSI measurements.\r\n",report_count,measReport->numDetections,get_num_RSSI_checks());
 			DBG_WRITE(dbgMsg, DBG_UART_SD_TS);
 			
-			sendHttpMsg = TRUE;
-			jsonReportLength = build_json_report(jsonReport, measReport, httpParams);
+			//if ((get_num_RSSI_checks() == 0) || (report_count == 2))
+			//if (get_num_RSSI_checks() == 0)
+			if (0)
+			{
+				// Modem failure! Reset the modem.
+				reset_modem = TRUE;
+				sprintf(dbgMsg,"No RSSI detections during this reporting period. Reset the modem!\r\n");
+				DBG_WRITE(dbgMsg, DBG_UART_SD_TS);
+				HiloReset();
+			}
+			else
+			{
+				// Modem is OK. Send the report.
+				sendHttpMsg = TRUE;
+				jsonReportLength = build_json_report(jsonReport, measReport, httpParams);
+
+				#ifdef SEND_SMS_IS_ENABLED
+				send_meas_over_sms();
+				vTaskDelay(DELAY_200MSEC);
+				#endif
+			
+				DBG_WRITE(jsonReport, DBG_UART_SD);
+			}
+			
 			reset_meas_report(measReport);//Need to restart measurement cycle
 			tick = tock;
-
-			#ifdef SEND_SMS_IS_ENABLED
-			send_meas_over_sms();
-			vTaskDelay(DELAY_200MSEC);
-			#endif
-			
-			DBG_WRITE(jsonReport, DBG_UART);
-			
 		}
 
 		#ifdef SEND_HTTP_IS_ENABLED

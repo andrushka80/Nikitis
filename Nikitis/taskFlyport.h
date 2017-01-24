@@ -18,6 +18,8 @@
 #include "SPIFlash.h"
 
 //one second equals 100 cycles
+#define		DELAY_1MIN				6000
+#define		DELAY_20SEC				2000
 #define		DELAY_1SEC				100
 #define		DELAY_200MSEC			20
 
