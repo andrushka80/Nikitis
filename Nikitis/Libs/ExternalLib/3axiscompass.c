@@ -89,8 +89,8 @@ struct Compass
 static int Compass_status(struct Compass *dev)
 {
 	BYTE status;
-	if(set_register(dev->devaddress,MODE_REG,0x01))
-		return -1;
+	// if(set_register(dev->devaddress,MODE_REG,0x01))
+		// return -1;
 	vTaskDelay(2);
 	status = read_register(dev->devaddress, STAT_REG);
 	vTaskDelay(2);
@@ -191,7 +191,16 @@ static int Compass_config (void * _self, va_list *app)
 	struct Compass *self = _self;
 	if(set_register(self->devaddress,CNTL_REGB,self->scale))
 		return -1;
-	return set_register(self->devaddress,MODE_REG,0x03);
+	
+	// if(set_register(self->devaddress,MODE_REG,0x0)) // set to continuous-measurement mode
+		// return -1;
+	
+	if(set_register(self->devaddress,CNTL_REGA,0x18)) // set data output rate to 75 Hz
+		return -1;
+	
+	
+	return set_register(self->devaddress,MODE_REG,0x0); // set to continuous-measurement mode
+	//return set_register(self->devaddress,MODE_REG,0x3); // set the sensor in idle mode
 }
 
 

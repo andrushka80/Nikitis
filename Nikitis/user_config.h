@@ -11,6 +11,7 @@
 #define 	CONFIG_SD_FILE		"Config.txt"
 #define 	DEBUG_SD_DIR		"Debug"
 #define 	DEBUG_SD_FNAME		"Debug.txt"
+#define     DEBUG_SD_FSIZE      2000UL
 
 #define		DEVICE_ID				"0000000001" //!! This is the default DEVICE_ID value to be set in case SD is not present
 
@@ -32,6 +33,8 @@
 
 //#define		SERVER_REPORT_PERIOD	TCP_TIMER_DIV64K_30SEC
 //#define		SERVER_REPORT_PERIOD	TCP_TIMER_DIV64K_1MIN
+//#define		SERVER_REPORT_PERIOD	TCP_TIMER_DIV64K_2MIN
+//#define		SERVER_REPORT_PERIOD	TCP_TIMER_DIV64K_10MIN
 #define		SERVER_REPORT_PERIOD	TCP_TIMER_DIV64K_15MIN
 
 ///////////////////////////////////////////

@@ -24,3 +24,7 @@ typedef enum
 // *****************************************
 void DBG_WRITE(char* dbgstr, DBG_TARGET_T mode);
 void init_dbg_sd();
+void set_new_dbg_file();
+void print_dbg_file_size();
+int dbg_file_size_exceeded();
+void goto_new_debug_dir();

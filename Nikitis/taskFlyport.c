@@ -106,6 +106,9 @@ void FlyportTask()
 	// init DEBUG on SD card
 	init_dbg_sd();
 	
+	// print debug file size
+	print_dbg_file_size();
+	
 	apnParams = &apnProfiles[cfgParams->apnProfile];
 	
 	httpParams = &httpProfiles[cfgParams->httpServerProfile];
@@ -227,6 +230,13 @@ void FlyportTask()
 				#endif
 			
 				DBG_WRITE(jsonReport, DBG_UART_SD);
+				
+				// Check if we should create another dbg file
+				//if (dbg_file_size_exceeded())
+				//{
+					set_new_dbg_file();
+				//}
+					
 			}
 			
 			reset_meas_report(measReport);//Need to restart measurement cycle
@@ -430,7 +440,8 @@ void run_http_state_machine(APN_PARAMS_T  * apnParams, HTTP_PARAMS_T * httpParam
 					}
 					else
 					{
-						httpNextState = CHECK_CONNECTION;
+						// httpNextState = CHECK_CONNECTION;
+						httpNextState = SETUP_APN; // DBG: setup apn each time, in order to properly react to network disconnects
 					}
 				}
 				
