@@ -207,6 +207,7 @@ void FlyportTask()
 			
 			sprintf(dbgMsg,"Sending the measurements report #%d. It contains %d detections and covers %d RSSI measurements.\r\n",report_count,measReport->numDetections,get_num_RSSI_checks());
 			DBG_WRITE(dbgMsg, DBG_UART_SD_TS);
+			//DBG_WRITE(dbgMsg, DBG_UART_SD);
 			
 			//if ((get_num_RSSI_checks() == 0) || (report_count == 2))
 			//if (get_num_RSSI_checks() == 0)

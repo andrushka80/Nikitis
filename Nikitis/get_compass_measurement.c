@@ -38,6 +38,7 @@ float 	get_compass_measurement(void* compass, char axis, BOOL log_meas){
 	if(readError()) {
 		sprintf(msg, "Error reading %c\r\n", axisDisplay);
 		DBG_WRITE(msg, DBG_UART_SD_TS);
+		//DBG_WRITE(msg, DBG_UART_SD);
 	}
 	else {
 		#ifdef 	DEBUG_PRINT_LEVEL2
@@ -45,6 +46,7 @@ float 	get_compass_measurement(void* compass, char axis, BOOL log_meas){
 		{
 			sprintf(msg,"%c %.2f milli-Gauss\r\n",axisDisplay, output);
 			DBG_WRITE(msg, DBG_SD_TS);
+			//DBG_WRITE(msg, DBG_SD);
 		}
 		#endif
 	}

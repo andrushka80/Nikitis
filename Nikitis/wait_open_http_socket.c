@@ -25,7 +25,9 @@ int wait_open_http_socket(void)
 			_dbgwrite("ERROR OPEN SOCKET!\r\n");
 			#endif
 			
-			return(HTTP_SESSION_END);
+			//return(HTTP_SESSION_END);
+			//return(OPEN_SOCKET);
+			return(SETUP_APN);
 			
 	}
 }

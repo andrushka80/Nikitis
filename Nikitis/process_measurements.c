@@ -19,6 +19,7 @@ void process_measurements(MEAS_REPORT_T*  measReport, float measBx, float measBy
 	{
 		#ifdef DEBUG_PRINT_LEVEL0
 		DBG_WRITE("Detection\r\n", DBG_UART_SD_TS);
+		//DBG_WRITE("Detection\r\n", DBG_UART_SD);
 		#endif
 		
 		measReport->numDetections++;
