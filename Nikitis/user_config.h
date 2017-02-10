@@ -27,7 +27,7 @@
 #define		SEND_HTTP_IS_ENABLED
 #define		SENSOR_IS_ATTACHED
 
-#define		FIELD_DETECTION_THSD	(float) 300000
+#define		FIELD_DETECTION_THSD	(float) 3000000
 
 #define     RSSI_DECIMATION_STEP    10
 

@@ -58,12 +58,17 @@
 #include "grovelib.h"
 #include "3axisCompass.h"
 
+#include "debug_report_tools.h"
+
 
 struct Interface *attachSensorToI2CBus(void *,int,int);
 int set_register(BYTE,BYTE, BYTE);
 BYTE read_register(BYTE,BYTE);
 
 static float scaling_factor = 1.3;
+
+int first_reg_read = 1;
+char dbgMsg_cpss[48];
 /**
  * struct Compass - Struct Compass Grove Sensor Device
  */
@@ -89,8 +94,8 @@ struct Compass
 static int Compass_status(struct Compass *dev)
 {
 	BYTE status;
-	// if(set_register(dev->devaddress,MODE_REG,0x01))
-		// return -1;
+	if(set_register(dev->devaddress,MODE_REG,0x01))
+		return -1;
 	vTaskDelay(2);
 	status = read_register(dev->devaddress, STAT_REG);
 	vTaskDelay(2);
@@ -114,32 +119,48 @@ static void *Compass_ctor (void * _self, va_list *app)
 {
 	struct Compass *self = _self;
 	self->devaddress =  (va_arg(*app, const BYTE)<<1);
-	self->scale = (va_arg(*app, const BYTE)<<4);
+	self->scale = (va_arg(*app, const BYTE));
 	switch(self->scale)
 	{
 		case SCALE1:
 			scaling_factor = 1.3;
+			sprintf(dbgMsg_cpss,"SCALE IS SCALE1\r\n");
+			DBG_WRITE(dbgMsg_cpss, DBG_UART);
 		break;	
 		case SCALE2:
 			scaling_factor = 1.024;
+			sprintf(dbgMsg_cpss,"SCALE IS SCALE2\r\n");
+			DBG_WRITE(dbgMsg_cpss, DBG_UART);
 		break;	
 		case SCALE3:
 			scaling_factor = 0.768;
+			sprintf(dbgMsg_cpss,"SCALE IS SCALE3\r\n");
+			DBG_WRITE(dbgMsg_cpss, DBG_UART);
 		break;	
 		case SCALE4:
 			scaling_factor = 0.614;
+			sprintf(dbgMsg_cpss,"SCALE IS SCALE4\r\n");
+			DBG_WRITE(dbgMsg_cpss, DBG_UART);
 		break;	
 		case SCALE5:
 			scaling_factor = 0.415;
+			sprintf(dbgMsg_cpss,"SCALE IS SCALE5\r\n");
+			DBG_WRITE(dbgMsg_cpss, DBG_UART);
 		break;	
 		case SCALE6:
 			scaling_factor = 0.361;
+			sprintf(dbgMsg_cpss,"SCALE IS SCALE6\r\n");
+			DBG_WRITE(dbgMsg_cpss, DBG_UART);
 		break;	
 		case SCALE7:
 			scaling_factor = 0.307;
+			sprintf(dbgMsg_cpss,"SCALE IS SCALE7\r\n");
+			DBG_WRITE(dbgMsg_cpss, DBG_UART);
 		break;	
 		case SCALE8:
 			scaling_factor = 0.214;
+			sprintf(dbgMsg_cpss,"SCALE IS SCALE8\r\n");
+			DBG_WRITE(dbgMsg_cpss, DBG_UART);
 	}
 	self->declination = va_arg(*app, const float)/10E6;
 	self->inter = NULL;
@@ -189,18 +210,9 @@ static void *Compass_attach (void * _board,void *_sensor,int ic2bus)
 static int Compass_config (void * _self, va_list *app)
 {
 	struct Compass *self = _self;
-	if(set_register(self->devaddress,CNTL_REGB,self->scale))
+	if(set_register(self->devaddress,CNTL_REGB,(self->scale)<<5))
 		return -1;
-	
-	// if(set_register(self->devaddress,MODE_REG,0x0)) // set to continuous-measurement mode
-		// return -1;
-	
-	if(set_register(self->devaddress,CNTL_REGA,0x18)) // set data output rate to 75 Hz
-		return -1;
-	
-	
-	return set_register(self->devaddress,MODE_REG,0x0); // set to continuous-measurement mode
-	//return set_register(self->devaddress,MODE_REG,0x3); // set the sensor in idle mode
+	return set_register(self->devaddress,MODE_REG,0x03);
 }
 
 
@@ -220,8 +232,22 @@ static float Compass_get (void * _self, va_list *app)
 	BYTE regist = va_arg(*app, const BYTE);
 	BYTE registh;
 	int data;
+	
+	if (first_reg_read)
+	{
+		data = read_register(self->devaddress, CNTL_REGB); //CNTL_REGB
+		sprintf(dbgMsg_cpss,"DBG: READ COMASS REGISTER CNTL_REGB: %d\r\n", data);
+		DBG_WRITE(dbgMsg_cpss, DBG_UART);
+		first_reg_read = 0;
+	}
+	
+	
 	if(Compass_status(self))
+	{
 		flag = 1;
+		sprintf(dbgMsg_cpss,"COMPASS STATUS ERROR!!!\r\n");
+		DBG_WRITE(dbgMsg_cpss, DBG_UART);
+	}
 	else
 	{
 		switch(regist)
@@ -265,7 +291,12 @@ static float Compass_get (void * _self, va_list *app)
 		}
 	}
 	if(data == -4096)
-		flag = 1;
+	{
+		//sprintf(dbgMsg_cpss,"COMPASS OVERFLOW!!!\r\n");
+		//DBG_WRITE(dbgMsg_cpss, DBG_UART);
+		//flag = 1;
+		data = 0;
+	}
 	if(flag)
 		return -1;
 	else 
